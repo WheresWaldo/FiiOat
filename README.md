@@ -26,7 +26,7 @@
 - And that's it ;)
 
 ## How to check logs:
-- Check fiioat.txt file in /data/adb/modules/FiiOat/fiioat.log folder
+- Check fiioat.log text file in /data/adb/modules/FiiOat folder
 - It should be like this (Not exactly ofc):
 
 # Screenshot of .log file
