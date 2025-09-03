@@ -1,6 +1,6 @@
-id=FIIOYAT
+id=fiioat
 name=FiiO Android Tweaker
-version=v17c
+version=v17d
 versionCode=1
-author=WheresWaldo
+author=WheresWaldo @ (GitHub/Head-Fi)
 description=This module tweaks your FiiO Android DAP. Resets zswap, adjusts scheduler, debloats, all in one script.

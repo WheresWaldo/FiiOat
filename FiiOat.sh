@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# FIIOAT v17c
+# FIIOAT v17d
 # Author: @WheresWaldo (Github)
 # ×××××××××××××××××××××××××× #
 
@@ -82,9 +82,9 @@ ANDROID_VERSION=$(getprop ro.build.version.release)
 TOTAL_RAM=$(free -m | awk '/Mem/{print $2}')
 
 # Log starting information
-log_info "Starting FiiOat v17c"
+log_info "Starting FiiOat v17d"
 log_info "Build Date: 09/03/2025"
-log_info "Author: @WheresWaldo (Github)"
+log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $(getprop ro.product.system.model)"
 log_info "Brand: $(getprop ro.product.system.brand)"
 log_info "Kernel: $(uname -r)"
@@ -189,12 +189,12 @@ write_value "$MEMORY_PATH/stat_interval" 30
 write_value "$MEMORY_PATH/compaction_proactiveness" 0
 write_value "$MEMORY_PATH/page-cluster" 0
 log_info "Detecting if your device has less or more than 8GB of RAM"
-if [ $TOTAL_RAM -lt 8000 ]; then
-    log_info "Detected 8GB or less"
+if [ $TOTAL_RAM -lt 4000 ]; then
+    log_info "Detected 4GB or less"
     log_info "Applying appropriate tweaks..."
     write_value "$MEMORY_PATH/swappiness" 60
 else
-    log_info "Detected more than 8GB"
+    log_info "Detected more than 4GB"
     log_info "Applying appropriate tweaks..."
     write_value "$MEMORY_PATH/swappiness" 0
 fi
@@ -348,4 +348,24 @@ pm disable-user --user 0 "com.qualcomm.qti.xrvd.service"
 pm disable-user --user 0 "hcfactory.test"
 pm disable-user --user 0 "vendor.qti.qesdk.sysservice"
 log_info "Done."
-log_info "Optimizations successfully completed. Enjoy :)"
+
+# Proceed with forcing secondary apps into the background
+# am force-stop <package_name>
+log_info "Stopping secondary applications..."
+am force-stop com.android.aboutfiio
+am force-stop com.fiio.devicevendor
+am force-stop com.fiio.entersleep
+am force-stop com.fiio.market
+am force-stop com.fiio.scrcpy
+am force-stop com.fiio.tape
+log_info "Done."
+
+# System application Optimizations
+log_info "Applying SYSTEM App Optimizations..."
+settings put global activity_starts_logging_enabled 0
+settings put secure send_action_app_error 0
+settings put system send_security_reports 0
+log_info "Done."
+
+log_info "Optimizations successfully completed."
+su -lp 2000 -c "cmd notification post -S bigtext -t 'FiiO Android Tweaker' 'Tag' 'FiiO Android Tweaker successfully installed, Born for Music!'" > /dev/null 2>&1
