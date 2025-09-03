@@ -1,7 +1,7 @@
 # FiiOat
 ** FiiO Andriod Tweaker **. A Magisk module to Tweak your Kernel parameters zswap size and mild debloat. This module applies at boot.
 
-## Features:
+
 ```
 - Reduces Jitter and Latency
 - Optimizes Ram Management
@@ -20,22 +20,30 @@
 ...
 
 ## Notes:
+...
 - This is not a perfomance/gaming module
 - Provides smooth and balanced running of Music apps
+...
 
 ## How to flash:
+...
 - Just flash in magisk and reboot
 - And that's it ;)
+...
 
 ## How to check logs:
+....
 - Check fiioat.log text file in /data/adb/modules/fiioat/ folder
 - It should be like this (Not exactly ofc):
+...
 
-# Screenshot of .log file
+## Screenshot of .log file
 
 ## How to Contribute:
+...
 - Fork the Repo
 - Edit tweaks according to your info/docs
 - Commit with proper name and info/docs about what you did
 - Test the change you did and check if eveything it's fine
 - Then make a pull request
+...
