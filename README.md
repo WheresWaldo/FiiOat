@@ -1,4 +1,3 @@
-# ![IMG_20220530_225120](https://user-images.githubusercontent.com/67799176/171062389-24c1c096-f991-449f-b962-45f145b95355.jpg)
 # FiiOat
 ** FiiO Andriod Tweaker **. A Magisk module to Tweak your Kernel parameters zswap size and mild debloat. This module applies at boot and it's not an AI module.
 
@@ -30,7 +29,7 @@
 - Check fiioat.txt file in /data/adb/modules/FiiOat/fiioat.log folder
 - It should be like this (Not exactly ofc):
 
-# ![Screenshot_20221105-133527_MT_Manager](https://user-images.githubusercontent.com/67799176/200122575-dc72aedb-3618-4172-8b81-27cbdc721247.png)
+# Screenshot of .log file
 
 ## How to Contribute:
 - Fork the Repo

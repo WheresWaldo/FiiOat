@@ -1,6 +1,6 @@
 id=FIIOYAT
-name=FiiO Yet Another Tweaker
-version=v17b
+name=FiiO Android Tweaker
+version=v17c
 versionCode=1
 author=WheresWaldo
-description=This modules tweaks your FiiO Android DAP.
+description=This module tweaks your FiiO Android DAP. Resets zswap, adjusts scheduler, debloats, all in one script.
