@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# FIIOAT v17d
+# FIIOAT v17e
 # Author: @WheresWaldo (Github)
 # ×××××××××××××××××××××××××× #
 
@@ -358,6 +358,79 @@ am force-stop com.fiio.entersleep
 am force-stop com.fiio.market
 am force-stop com.fiio.scrcpy
 am force-stop com.fiio.tape
+log_info "Done."
+
+# Force background operation on secondary applications
+# cmd appops set <package_name> RUN_ANY_IN_BACKGROUND ignore
+log_info "Setting run in background permisssions..."
+cmd appops set android RUN_ANY_IN_BACKGROUND ignore
+cmd appops set android.ext.services RUN_ANY_IN_BACKGROUND ignore
+cmd appops set android.ext.shared RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.certinstaller RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.chrome RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.connectivity.resources RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.documentsui RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.internal.systemui.navbar.threebutton RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.keychain RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.launcher3 RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.localtransport RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.location.fused RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.modulemetadata RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.networkstack RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.networkstack.tethering RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.pacprocessor RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.permissioncontroller RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.remoteprovisioner RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.sdksandbox RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.systemui RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.systemui RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.vending RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.android.wifi.resources RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.google.android.ext.shared RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.google.android.gms RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.google.android.gsf RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.google.android.gsf RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.google.android.packageinstaller RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.google.android.webview RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.qti.pasrservice RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.qti.snapdragon.qdcm_ff RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.qualcomm.qti.workloadclassifier RUN_ANY_IN_BACKGROUND ignore
+log_info "Done."
+
+# Set Music Apps to use unrestricted mode when DAP on Battery power
+# dumpsys deviceidle whitelist +<package_name>
+dumpsys deviceidle whitelist +com.amazon.mp3
+dumpsys deviceidle whitelist +com.android.fiio.scrcpy
+dumpsys deviceidle whitelist +com.android.fiioroon
+dumpsys deviceidle whitelist +com.android.fiioupdate
+dumpsys deviceidle whitelist +com.apple.adroid.music
+dumpsys deviceidle whitelist +com.apple.android.music.classical
+dumpsys deviceidle whitelist +com.aspiro.tidal
+dumpsys deviceidle whitelist +com.bandcamp.android
+dumpsys deviceidle whitelist +com.cca.app_noble
+dumpsys deviceidle whitelist +com.extreamsd.usbaudioplayerpro
+dumpsys deviceidle whitelist +com.fiio.android
+dumpsys deviceidle whitelist +com.fiio.devicevendor
+dumpsys deviceidle whitelist +com.fiio.entersleep
+dumpsys deviceidle whitelist +com.fiio.fiioeq
+dumpsys deviceidle whitelist +com.fiio.market
+dumpsys deviceidle whitelist +com.fiio.music
+dumpsys deviceidle whitelist +com.fiio.scrcpy
+dumpsys deviceidle whitelist +com.fiio.tape
+dumpsys deviceidle whitelist +com.foobar2000.foobar2000
+dumpsys deviceidle whitelist +com.google.android.apps.youtube.music
+dumpsys deviceidle whitelist +com.google.android.youtube
+dumpsys deviceidle whitelist +com.hiby.music
+dumpsys deviceidle whitelist +com.hiby.music.n6
+dumpsys deviceidle whitelist +com.hiby.roon.cayin
+dumpsys deviceidle whitelist +com.neutroncode.mp
+dumpsys deviceidle whitelist +com.pandora.android
+dumpsys deviceidle whitelist +com.qobuz.music
+dumpsys deviceidle whitelist +com.roon.mobile
+dumpsys deviceidle whitelist +com.roon.onthego
+dumpsys deviceidle whitelist +com.soundcloud.android
+dumpsys deviceidle whitelist +com.spotfy.music
+dumpsys deviceidle whitelist +com.topjohnwu.magisk
 log_info "Done."
 
 # System application Optimizations
