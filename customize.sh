@@ -1,12 +1,13 @@
 # shellcheck disable=SC2148
 # shellcheck disable=SC2034
 SKIPUNZIP=1
+FIIO_MODEL=$(getprop ro.product.model)
 RM_RF() {
 rm /sdcard/Documents/FiiOat/FiiOat.log 2>/dev/null
 rm /sdcard/FiiOat.log 2>/dev/null
 rm /sdcard/FiiOat/FiiOat.txt 2>/dev/null
 rm "${MODPATH}/FiiOat.log" 2>/dev/null
-rm "${MODPATH}/FiiOat-logging-error.log" 2>/dev/null
+rm "${MODPATH}/error.log" 2>/dev/null
 rm "${MODPATH}/LICENSE" 2>/dev/null
 rm "${MODPATH}/README.md" 2>/dev/null
 }
@@ -23,7 +24,7 @@ unzip -o "$ZIPFILE" module.prop -d "$MODPATH" >&2
 }
 MOD_PRINT() {
 ui_print "- FiiO Android Tweaker"
-ui_print "- Installing"
+ui_print "- Installing on $FIIO_MODEL"
 }
 set -x
 RM_RF

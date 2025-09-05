@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# FIIOAT v17e
+# FIIOAT v17i
 # Author: @WheresWaldo (Github)
 # ×××××××××××××××××××××××××× #
 
@@ -64,26 +64,26 @@ ERROR_LOG="${MODDIR}/error.log"
 :> "$ERROR_LOG"
 
 # Variables
+ANDROID_VERSION=$(getprop ro.build.version.release)
+FIIO_MODEL=$(getprop ro.product.model)
 APP_PATH="/system/app"
-PRIVAPP_PATH="/system/priv-app"
-UCLAMP_PATH="/dev/stune/top-app/uclamp.max"
+CPUFREQ_PATH="/sys/devices/system/cpu/cpufreq"
 CPUSET_PATH="/dev/cpuset"
-MODULE_PATH="/sys/module"
-KERNEL_PATH="/proc/sys/kernel"
 IPV4_PATH="/proc/sys/net/ipv4"
+KERNEL_PATH="/proc/sys/kernel"
 MEMORY_PATH="/proc/sys/vm"
 MGLRU_PATH="/sys/kernel/mm/lru_gen"
-CPUFREQ_PATH="/sys/devices/system/cpu/cpufreq"
-SCHEDUTIL2_PATH="/sys/devices/system/cpu/cpufreq/schedutil"
-SCHEDUTIL_PATH="/sys/devices/system/cpu/cpu0/cpufreq/schedutil"
-SR="\/dev\/"
-PS="/proc/swap*"
-ANDROID_VERSION=$(getprop ro.build.version.release)
-TOTAL_RAM=$(free -m | awk '/Mem/{print $2}')
+MODULE_PATH="/sys/module"
+PRIVAPP_PATH="/system/priv-app"
+SCHEDUTIL_PATH="/sys/devices/system/cpu/"
+TOTAL_RAM=$(grep -i "MemTotal" /proc/meminfo | awk '{print $2}')
+UCLAMP_PATH="/dev/stune/top-app/uclamp.max"
+ZRAM_PATH="/dev/zram0"
+
 
 # Log starting information
-log_info "Starting FiiOat v17d"
-log_info "Build Date: 09/03/2025"
+log_info "Starting FiiOat v17i"
+log_info "Build Date: 09/04/2025"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $(getprop ro.product.system.model)"
 log_info "Brand: $(getprop ro.product.system.brand)"
@@ -93,91 +93,62 @@ log_info "Android Version: $ANDROID_VERSION"
 
 # Schedutil rate-limits tweak
 log_info "Applying CPU schedutil governor rate-limits..."
-if [ -d "$SCHEDUTIL2_PATH" ]; then
-    write_value "$SCHEDUTIL2_PATH/up_rate_limit_us" 10000
-    write_value "$SCHEDUTIL2_PATH/down_rate_limit_us" 20000
-    log_info "Done."
-elif [ -e "$SCHEDUTIL_PATH" ]; then
-    for cpu in /sys/devices/system/cpu/*/cpufreq/schedutil; do
-        write_value "${cpu}/up_rate_limit_us" 10000
-        write_value "${cpu}/down_rate_limit_us" 20000
-    done
-    log_info "Done."
-else
-    log_info "Aborting: Not using CPU schedutil governor"
-fi
+write_value "$SCHEDUTIL_PATH/cpu0/cpufreq/schedutil/rate_limit_us" 10000
+write_value "$SCHEDUTIL_PATH/cpu4/cpufreq/schedutil/rate_limit_us" 10000
+log_info "Done."
 
 # Setting CPU core minimum frequencies
 log_info "Applying minimum cpu E-core frrequency..."
-write_value "CPUFREQ_PATH/policy0/scaling_min_freq" 300000
-write_value "CPUFREQ_PATH/policy0/scaling_cur_freq" 300000
+write_value "$CPUFREQ_PATH/policy0/scaling_min_freq" 300000
+write_value "$CPUFREQ_PATH/policy0/scaling_cur_freq" 300000
 log_info "Done."
 log_info "Applying minimum cpu P-core frrequency..."
-write_value "CPUFREQ_PATH/policy4/scaling_min_freq" 300000
-write_value "CPUFREQ_PATH/policy4/scaling_cur_freq" 300000
+write_value "$CPUFREQ_PATH/policy4/scaling_min_freq" 300000
+write_value "$CPUFREQ_PATH/policy4/scaling_cur_freq" 300000
 log_info "Done." 
 
 # Grouping tasks tweak
-log_info "Disabling Sched Auto Group..."
-write_value "$KERNEL_PATH/sched_autogroup_enabled" 0
-log_info "Done."
+# Does not exist in FiiO devices (default is already 0)
+#log_info "Disabling Sched Auto Group..."
+#write_value "$KERNEL_PATH/sched_autogroup_enabled" 0
+#log_info "Done."
 
 # Enable CRF by default
 log_info "Enabling child_runs_first..."
 write_value "$KERNEL_PATH/sched_child_runs_first" 1
 log_info "Done."
 
-# Reseting zswap size
-alias SWAPT='grep -i SwapTotal /proc/meminfo | tr -d [:alpha:]:" "'
-# First we find the proc to turn swap off
-log_info "Searching for swapoff..."
-if [ -f /system/bin/swapoff ] ; then
-    SO="/system/bin/swapoff"
+# Specifying ZRAM size
+# JM21 = 512M
+# M21 = 768M
+log_info "Detected installation model..."
+if [ $FIIO_MODEL == 'FiiO JM21' ]; then
+    log_info "Applying appropriate zram size for $FIIO_MODEL..."
+    ZRAM_SIZE="512M"
 else
-    SO="swapoff"
+    log_info "Applying appropriate zram size for $FIIO_MODEL..."
+    ZRAM_SIZE="768M"
 fi
+log_info "Done."
 
-# We will search for zram0 & variants
-# Samsung had a different method at least once (vmswap) 
-# HTC used four zram swap partitions at least once
-# They can't even all agree if it's swap or swaps in /proc
-# Find all swapregions and target each one for swapoff
-# Don't assume it's in the first field of swaps, find it
+# We will reset size for zram0 and reinitialize as swap
+log_info "Resetting $ZRAM_PATH..."
+swapoff $ZRAM_PATH 2>/dev/null
+log_info "$ZRAM_PATH is deactivated as swap."
+zramctl --reset $ZRAM_PATH
+log_info "Setting new size for $ZRAM_PATH to $ZRAM_SIZE..."
+zramctl --size $ZRAM_SIZE $ZRAM_PATH
+log_info "Reinitializing $ZRAM_PATH as swap..."
+mkswap $ZRAM_PATH
+swapon $ZRAM_PATH
+log_info "ZRAM device Status: $ZRAM_PATH has been resized to $ZRAM_SIZE."
+log_info "Done."
 
-DIE=$(awk -v SBD="$SR" ' $0 ~ SBD {
-      for ( i=1;i<=NF;i++ )
-        {
-          if ( $i ~ ( "^" SBD ) )
-           {
-              printf "%s;", $i
-              break
-           }
-        }
-      }' $PS)
-
-saveifs=$IFS
-IFS=';'
-log_info "Resetting zswap size..."
-for i in $DIE
-do
-    case $i in
-        *zram*)
-              j=$(echo $i | sed 's/.*zram//')
-              ( ( 
-                 echo $j > /sys/class/zram-control/hot_remove
-                 echo 1 > /sys/block/zram${j}/reset
-                 $SO $i
-              ) & )
-              ;;
-        *)
-              if [ -n $i ]; then
-                  ( ( $SO $i ) & ) 
-              fi
-              ;;
-    esac
-done
-
-IFS=$saveifs
+# Zswap tweaks
+write_value "$MODULE_PATH/zswap/parameters/compressor" lz4
+log_info "Setting zswap compressor to lz4 (fastest compressor)..."
+write_value "$MODULE_PATH/zswap/parameters/zpool" zsmalloc
+log_info "Setting zpool to zsmalloc..."
 log_info "Done."
 
 # Apply RAM tweaks
@@ -188,16 +159,8 @@ write_value "$MEMORY_PATH/vfs_cache_pressure" 50
 write_value "$MEMORY_PATH/stat_interval" 30
 write_value "$MEMORY_PATH/compaction_proactiveness" 0
 write_value "$MEMORY_PATH/page-cluster" 0
-log_info "Detecting if your device has less or more than 8GB of RAM"
-if [ $TOTAL_RAM -lt 4000 ]; then
-    log_info "Detected 4GB or less"
-    log_info "Applying appropriate tweaks..."
-    write_value "$MEMORY_PATH/swappiness" 60
-else
-    log_info "Detected more than 4GB"
-    log_info "Applying appropriate tweaks..."
-    write_value "$MEMORY_PATH/swappiness" 0
-fi
+log_info "Applying appropriate tweaks..."
+write_value "$MEMORY_PATH/swappiness" 60
 write_value "$MEMORY_PATH/dirty_ratio" 60
 log_info "Done."
 
@@ -290,18 +253,6 @@ if [ -d "$MODULE_PATH/mmc_core" ]; then
     log_info "Done."
 fi
 
-# Zswap tweaks
-log_info "Checking if your kernel supports zswap..."
-if [ -d "$MODULE_PATH/zswap" ]; then
-    log_info "zswap supported, applying tweaks..."
-    write_value "$MODULE_PATH/zswap/parameters/compressor" lz4
-    log_info "Set zswap compressor to lz4 (fastest compressor)."
-    write_value "$MODULE_PATH/zswap/parameters/zpool" zsmalloc
-    log_info "Set zpool to zsmalloc."
-    log_info "Done."
-else
-    log_info "Aborting: Your kernel doesn't support zswap"
-fi
 
 # Enable power efficiency
 log_info "Enabling power efficiency..."
