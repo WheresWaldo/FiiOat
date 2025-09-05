@@ -1,9 +1,14 @@
 #!/system/bin/sh
-# FIIOAT v17m
+# FIIOAT v17p
 # Author: @WheresWaldo (Github)
 # ×××××××××××××××××××××××××× #
 
-sleep 30
+# We need to wait until the system is completely booted
+until [ "$(getprop sys.boot_completed)" = 1 ]
+   do
+   sleep 1
+   done
+sleep 3
 
 # Function to append a message to the specified log file
 log_message() {
@@ -82,7 +87,7 @@ ZRAM_PATH="/dev/zram0"
 
 
 # Log starting information
-log_info "Starting FiiOat v17m"
+log_info "Starting FiiOat v17p"
 log_info "Build Date: 09/04/2025"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $(getprop ro.product.system.model)"
@@ -122,7 +127,7 @@ log_info "Done."
 # JM21 = 512M
 # M21 = 768M
 log_info "Detected installation model..."
-if [ $FIIO_MODEL == "FiiO JM21" ]; then
+if [ "$FIIO_MODEL" == "FiiO JM21" ]; then
     log_info "Applying appropriate zram size for $FIIO_MODEL..."
     ZRAM_SIZE=536870912
 else
@@ -131,19 +136,63 @@ else
 fi
 log_info "Done."
 
-# We will reset size for zram0 and reinitialize as swap
-chmod -R u+rw,g+rw,o+rw "$ZRAM_PATH"
-log_info "Resetting $ZRAM_PATH..."
-swapoff $ZRAM_PATH
-log_info "$ZRAM_PATH is deactivated as swap."
-log_info "resetting size to $ZRAM_SIZE..."
-fallocate -l $ZRAM_SIZE $ZRAM_PATH
-log_info "Reinitializing $ZRAM_PATH as swap..."
-mkswap $ZRAM_PATH
-log_info "Enabling ZRAM swap..."
-swapon $ZRAM_PATH
-log_info "ZRAM device Status: $ZRAM_PATH has been resized to ZRAM_SIZE."
-log_info "Done."
+# Here is the section ripped from SWAP_TORPEDO
+# I would like to refactor this so that the variables match the
+# rest of the script
+alias SWAPT='grep -i SwapTotal /proc/meminfo | tr -d [:alpha:]:" "'
+until [ "$(getprop sys.boot_completed)" = 1 ]
+   do
+   sleep 1
+   done
+TL=60
+Step=3
+k=0
+while [ $(SWAPT) -eq 0  ]
+do
+    k=$(( $k + $Step ))
+    if [ $k -gt $TL  ] ; then
+        exit 0
+    fi
+    sleep $Step
+done
+SR="\/dev\/"
+PS="/proc/swap*"
+if [ -f /system/bin/swapoff ] ; then
+    SO="/system/bin/swapoff"
+else
+    SO="swapoff"
+fi
+DIE=$(awk -v SBD="$SR" ' $0 ~ SBD {
+      for ( i=1;i<=NF;i++ )
+        {
+          if ( $i ~ ( "^" SBD ) )
+           {
+              printf "%s;", $i
+              break
+           }
+        }
+      }' $PS)
+saveifs=$IFS
+IFS=';'
+for i in $DIE
+do
+    case $i in
+        *zram*)
+              j=$(echo $i | sed 's/.*zram//')
+              ( ( 
+                 echo $j > /sys/class/zram-control/hot_remove
+                 echo 1 > /sys/block/zram${j}/reset
+                 $SO $i
+              ) & )
+              ;;
+        *)
+              if [ -n $i ]; then
+                  ( ( $SO $i ) & ) 
+              fi
+              ;;
+    esac
+done
+IFS=$saveifs
 
 # Apply RAM tweaks
 # The stat_interval reduces jitter (Credits to kdrag0n)
