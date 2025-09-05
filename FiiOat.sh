@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# FIIOAT v17l
+# FIIOAT v17m
 # Author: @WheresWaldo (Github)
 # ×××××××××××××××××××××××××× #
 
@@ -82,7 +82,7 @@ ZRAM_PATH="/dev/zram0"
 
 
 # Log starting information
-log_info "Starting FiiOat v17l"
+log_info "Starting FiiOat v17m"
 log_info "Build Date: 09/04/2025"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $(getprop ro.product.system.model)"
@@ -132,6 +132,7 @@ fi
 log_info "Done."
 
 # We will reset size for zram0 and reinitialize as swap
+chmod -R u+rw,g+rw,o+rw "$ZRAM_PATH"
 log_info "Resetting $ZRAM_PATH..."
 swapoff $ZRAM_PATH
 log_info "$ZRAM_PATH is deactivated as swap."
