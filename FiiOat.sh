@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# FIIOAT v17i
+# FIIOAT v17l
 # Author: @WheresWaldo (Github)
 # ×××××××××××××××××××××××××× #
 
@@ -82,7 +82,7 @@ ZRAM_PATH="/dev/zram0"
 
 
 # Log starting information
-log_info "Starting FiiOat v17i"
+log_info "Starting FiiOat v17l"
 log_info "Build Date: 09/04/2025"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $(getprop ro.product.system.model)"
@@ -122,33 +122,26 @@ log_info "Done."
 # JM21 = 512M
 # M21 = 768M
 log_info "Detected installation model..."
-if [ $FIIO_MODEL == 'FiiO JM21' ]; then
+if [ $FIIO_MODEL == "FiiO JM21" ]; then
     log_info "Applying appropriate zram size for $FIIO_MODEL..."
-    ZRAM_SIZE="512M"
+    ZRAM_SIZE=536870912
 else
     log_info "Applying appropriate zram size for $FIIO_MODEL..."
-    ZRAM_SIZE="768M"
+    ZRAM_SIZE=805306368
 fi
 log_info "Done."
 
 # We will reset size for zram0 and reinitialize as swap
 log_info "Resetting $ZRAM_PATH..."
-swapoff $ZRAM_PATH 2>/dev/null
+swapoff $ZRAM_PATH
 log_info "$ZRAM_PATH is deactivated as swap."
-zramctl --reset $ZRAM_PATH
-log_info "Setting new size for $ZRAM_PATH to $ZRAM_SIZE..."
-zramctl --size $ZRAM_SIZE $ZRAM_PATH
+log_info "resetting size to $ZRAM_SIZE..."
+fallocate -l $ZRAM_SIZE $ZRAM_PATH
 log_info "Reinitializing $ZRAM_PATH as swap..."
 mkswap $ZRAM_PATH
+log_info "Enabling ZRAM swap..."
 swapon $ZRAM_PATH
-log_info "ZRAM device Status: $ZRAM_PATH has been resized to $ZRAM_SIZE."
-log_info "Done."
-
-# Zswap tweaks
-write_value "$MODULE_PATH/zswap/parameters/compressor" lz4
-log_info "Setting zswap compressor to lz4 (fastest compressor)..."
-write_value "$MODULE_PATH/zswap/parameters/zpool" zsmalloc
-log_info "Setting zpool to zsmalloc..."
+log_info "ZRAM device Status: $ZRAM_PATH has been resized to ZRAM_SIZE."
 log_info "Done."
 
 # Apply RAM tweaks
