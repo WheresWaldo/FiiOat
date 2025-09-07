@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# FIIOAT v17q
+# FIIOAT v17r1
 # Author: @WheresWaldo (Github)
 # ×××××××××××××××××××××××××× #
 
@@ -87,7 +87,7 @@ ZRAM_PATH="/dev/zram0"
 
 
 # Log starting information
-log_info "Starting FiiOat v17q"
+log_info "Starting FiiOat v17r1"
 log_info "Build Date: 09/04/2025"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $(getprop ro.product.system.model)"
@@ -359,7 +359,6 @@ log_info "Done."
 # cmd appops set <package_name> RUN_ANY_IN_BACKGROUND ignore
 log_info "Setting run in background permisssions..."
 cmd appops set android RUN_ANY_IN_BACKGROUND ignore
-cmd appops set com.android.aboutfiio RUN_ANY_IN_BACKGROUND ignore
 cmd appops set android.ext.services RUN_ANY_IN_BACKGROUND ignore
 cmd appops set android.ext.shared RUN_ANY_IN_BACKGROUND ignore
 cmd appops set com.amazon.mp3 RUN_ANY_IN_BACKGROUND ignore
@@ -385,8 +384,6 @@ cmd appops set com.android.vending RUN_ANY_IN_BACKGROUND ignore
 cmd appops set com.android.wifi.resources RUN_ANY_IN_BACKGROUND ignore
 cmd appops set com.fiio.devicevendor RUN_ANY_IN_BACKGROUND ignore
 cmd appops set com.fiio.fiioeq RUN_ANY_IN_BACKGROUND ignore
-cmd appops set com.fiio.entersleep RUN_ANY_IN_BACKGROUND ignore
-cmd appops set com.fiio.market RUN_ANY_IN_BACKGROUND ignore
 cmd appops set com.fiio.scrcpy RUN_ANY_IN_BACKGROUND ignore
 cmd appops set com.fiio.tape RUN_ANY_IN_BACKGROUND ignore
 cmd appops set com.google.android.ext.shared RUN_ANY_IN_BACKGROUND ignore
@@ -413,6 +410,7 @@ dumpsys deviceidle whitelist +com.bandcamp.android
 dumpsys deviceidle whitelist +com.cca.app_noble
 dumpsys deviceidle whitelist +com.extreamsd.usbaudioplayerpro
 dumpsys deviceidle whitelist +com.fiio.android
+dumpsys deviceidle whitelist +com.fiio.entersleep
 dumpsys deviceidle whitelist +com.fiio.fiioeq
 dumpsys deviceidle whitelist +com.fiio.music
 dumpsys deviceidle whitelist +com.fiio.scrcpy
