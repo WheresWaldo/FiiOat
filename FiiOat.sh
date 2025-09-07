@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# FIIOAT v17r1
+# FIIOAT v17r2
 # Author: @WheresWaldo (Github)
 # ×××××××××××××××××××××××××× #
 
@@ -87,7 +87,7 @@ ZRAM_PATH="/dev/zram0"
 
 
 # Log starting information
-log_info "Starting FiiOat v17r1"
+log_info "Starting FiiOat v17r2"
 log_info "Build Date: 09/04/2025"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $(getprop ro.product.system.model)"
@@ -296,7 +296,6 @@ if [ -d "$MODULE_PATH/mmc_core" ]; then
     log_info "Done."
 fi
 
-
 # Enable power efficiency
 log_info "Enabling power efficiency..."
 write_value "$MODULE_PATH/workqueue/parameters/power_efficient" 1
@@ -433,8 +432,11 @@ log_info "Done."
 
 # System application Optimizations
 log_info "Applying SYSTEM App Optimizations..."
+settings put global accessibility_reduce_transparency 1
 settings put global activity_starts_logging_enabled 0
+settings put global disable_window_blurs 1
 settings put secure send_action_app_error 0
+settings put system rakuten_denwa 0
 settings put system send_security_reports 0
 log_info "Done."
 
