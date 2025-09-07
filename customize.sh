@@ -31,7 +31,8 @@ SET_PERMISSION() {
 ui_print "- Setting Permissions"
 set_perm_recursive "$MODPATH" 0 0 0755 0644
 set_perm_recursive "${MODPATH}/FiiOat.sh" 0 0 0755 0700
-set_perm_recursive "/sys" 0 0 0755 0644
+set_parm_recursive "/sys/devices/system/cpu/cpufreq" 0 0 0755 0644
+set_parm_recursive "/sys/module/workqueue/parameters" 0 0 0755 0644
 }
 
 set -x
@@ -44,6 +45,7 @@ ui_print "- FiiO Android Tweak module is installed"
 ui_print "- Please REBOOT/RESTART the Device to take effects"
 ui_print ""
 ui_print "- WARNING:"
-ui_print "- Developer is NOT responsible for any negative impact this module may exhibit"
+ui_print "- Developer is NOT responsible for any negative"
+ui_print "  impact this module may exhibit"
 ui_print "- Install and use this modul;e at your own risk"
 ui_print ""

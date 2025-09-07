@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# FIIOAT v17r2
+# FIIOAT v17_r22
 # Author: @WheresWaldo (Github)
 # ×××××××××××××××××××××××××× #
 
@@ -87,8 +87,8 @@ ZRAM_PATH="/dev/zram0"
 
 
 # Log starting information
-log_info "Starting FiiOat v17r2"
-log_info "Build Date: 09/04/2025"
+log_info "Starting FiiOat v17_r22"
+log_info "Build Date: 09/07/2025"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $(getprop ro.product.system.model)"
 log_info "Brand: $(getprop ro.product.system.brand)"
@@ -105,24 +105,32 @@ log_info "Done."
 # Setting CPU core minimum frequencies
 log_info "Applying minimum cpu E-core frrequency..."
 write_value "$CPUFREQ_PATH/policy0/scaling_min_freq" 300000
-write_value "$CPUFREQ_PATH/policy0/scaling_cur_freq" 300000
+write_value "$CPUFREQ_PATH/policy1/scaling_min_freq" 300000
+write_value "$CPUFREQ_PATH/policy2/scaling_min_freq" 300000
+write_value "$CPUFREQ_PATH/policy3/scaling_min_freq" 300000
 log_info "Done."
 log_info "Applying minimum cpu P-core frrequency..."
 write_value "$CPUFREQ_PATH/policy4/scaling_min_freq" 300000
-write_value "$CPUFREQ_PATH/policy4/scaling_cur_freq" 300000
+write_value "$CPUFREQ_PATH/policy5/scaling_min_freq" 300000
+write_value "$CPUFREQ_PATH/policy6/scaling_min_freq" 300000
+write_value "$CPUFREQ_PATH/policy7/scaling_min_freq" 300000
 log_info "Done." 
 
+: <<'SECTION'
+# This setting is not adjustable in FiiO devices and is 0 by default
 # Grouping tasks tweak
-# Does not exist in FiiO devices (default is already 0)
-#log_info "Disabling Sched Auto Group..."
-#write_value "$KERNEL_PATH/sched_autogroup_enabled" 0
-#log_info "Done."
+log_info "Disabling Sched Auto Group..."
+write_value "$KERNEL_PATH/sched_autogroup_enabled" 0
+log_info "Done."
+SECTION
 
 # Enable CRF by default
 log_info "Enabling child_runs_first..."
 write_value "$KERNEL_PATH/sched_child_runs_first" 1
 log_info "Done."
 
+: <<'SECTION'
+# These settings are not currently used as ZRAM has been disabled
 # Specifying ZRAM size
 # JM21 = 512M
 # M21 = 768M
@@ -135,6 +143,7 @@ else
     ZRAM_SIZE=805306368
 fi
 log_info "Done."
+SECTION
 
 # Here is the section ripped from SWAP_TORPEDO
 # I would like to refactor this so that the variables match the
@@ -236,10 +245,11 @@ write_value "$KERNEL_PATH/printk" "0        0 0 0"
 write_value "$KERNEL_PATH/printk_devkmsg" "off"
 for queue in /sys/block/*/queue; do
     write_value "$queue/iostats" 0
-    write_value "$queue/nr_requests" 64
 done
 log_info "Done."
 
+: <<'SECTION'
+# These settings are not adjustable in FiiO kernels.
 # Tweak scheduler to have less Latency
 # Credits to RedHat & tytydraco & KTweak
 log_info "Tweaking scheduler to reduce latency"
@@ -247,6 +257,7 @@ write_value "$KERNEL_PATH/sched_migration_cost_ns" 50000
 write_value "$KERNEL_PATH/sched_min_granularity_ns" 1000000
 write_value "$KERNEL_PATH/sched_wakeup_granularity_ns" 1500000
 log_info "Done."
+SECTION
 
 # Disable Timer migration
 log_info "Disabling Timer Migration"
@@ -298,7 +309,7 @@ fi
 
 # Enable power efficiency
 log_info "Enabling power efficiency..."
-write_value "$MODULE_PATH/workqueue/parameters/power_efficient" 1
+write_value "$MODULE_PATH/workqueue/parameters/power_efficient" Y
 log_info "Done."
 
 # Disable TCP timestamps for reduced overhead
@@ -325,8 +336,14 @@ pm disable-user --user 0 "com.android.cts.ctsshim"
 pm disable-user --user 0 "com.android.cts.priv.ctsshim"
 pm disable-user --user 0 "com.android.dreams.basic"
 pm disable-user --user 0 "com.android.inputmethod.latin"
+pm disable-user --user 0 "com.android.internal.display.cutout.emulation.corner"
+pm disable-user --user 0 "com.android.internal.display.cutout.emulation.double"
+pm disable-user --user 0 "com.android.internal.display.cutout.emulation.hole"
+pm disable-user --user 0 "com.android.internal.display.cutout.emulation.tall"
+pm disable-user --user 0 "com.android.internal.display.cutout.emulation.waterfall"
 pm disable-user --user 0 "com.android.internal.systemui.navbar.twobutton"
 pm disable-user --user 0 "com.android.managedprovisioning"
+pm disable-user --user 0 "com.android.providers.blockednumber"
 pm disable-user --user 0 "com.android.traceur"
 pm disable-user --user 0 "com.example.fiiotestappliction"
 pm disable-user --user 0 "com.google.android.apps.nbu.files"
@@ -341,6 +358,9 @@ pm disable-user --user 0 "com.qualcomm.qti.xrcb"
 pm disable-user --user 0 "com.qualcomm.qti.xrvd.service"
 pm disable-user --user 0 "hcfactory.test"
 pm disable-user --user 0 "vendor.qti.qesdk.sysservice"
+pm disable-user --user 0 "com.android.server.telecom.overlay.common"
+pm disable-user --user 0 "com.android.smspush"
+pm disable-user --user 0 "vendor.qti.hardware.cacert.server"
 log_info "Done."
 
 # Proceed with forcing secondary apps into the background
@@ -436,9 +456,10 @@ settings put global accessibility_reduce_transparency 1
 settings put global activity_starts_logging_enabled 0
 settings put global disable_window_blurs 1
 settings put secure send_action_app_error 0
-settings put system rakuten_denwa 0
 settings put system send_security_reports 0
 log_info "Done."
 
 log_info "Optimizations successfully completed."
+cp "$ERROR_LOG" /storage/emulated/0/Download
+cp "$INFO_LOG" /storage/emulated/0/Download
 su -lp 2000 -c "cmd notification post -S bigtext -t 'FiiO Android Tweaker' 'Tag' 'FiiO Android Tweaker successfully installed, Born for Music!'" > /dev/null 2>&1
