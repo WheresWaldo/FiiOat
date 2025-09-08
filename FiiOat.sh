@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# FIIOAT v17_r22
+# FIIOAT v17_r25
 # Author: @WheresWaldo (Github)
 # ×××××××××××××××××××××××××× #
 
@@ -45,7 +45,7 @@ write_value() {
     fi
 
     # Make the file writable
-    chmod +w "$file_path" 2>/dev/null
+    chmod a+w "$file_path" 2>/dev/null
 
     # Write new value, log error if it fails
     if ! echo "$value" >"$file_path" 2>/dev/null; then
@@ -87,7 +87,7 @@ ZRAM_PATH="/dev/zram0"
 
 
 # Log starting information
-log_info "Starting FiiOat v17_r22"
+log_info "Starting FiiOat v17_r25"
 log_info "Build Date: 09/07/2025"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $(getprop ro.product.system.model)"
@@ -105,31 +105,23 @@ log_info "Done."
 # Setting CPU core minimum frequencies
 log_info "Applying minimum cpu E-core frrequency..."
 write_value "$CPUFREQ_PATH/policy0/scaling_min_freq" 300000
-write_value "$CPUFREQ_PATH/policy1/scaling_min_freq" 300000
-write_value "$CPUFREQ_PATH/policy2/scaling_min_freq" 300000
-write_value "$CPUFREQ_PATH/policy3/scaling_min_freq" 300000
 log_info "Done."
 log_info "Applying minimum cpu P-core frrequency..."
 write_value "$CPUFREQ_PATH/policy4/scaling_min_freq" 300000
-write_value "$CPUFREQ_PATH/policy5/scaling_min_freq" 300000
-write_value "$CPUFREQ_PATH/policy6/scaling_min_freq" 300000
-write_value "$CPUFREQ_PATH/policy7/scaling_min_freq" 300000
 log_info "Done." 
-
-: <<'SECTION'
-# This setting is not adjustable in FiiO devices and is 0 by default
-# Grouping tasks tweak
-log_info "Disabling Sched Auto Group..."
-write_value "$KERNEL_PATH/sched_autogroup_enabled" 0
-log_info "Done."
-SECTION
 
 # Enable CRF by default
 log_info "Enabling child_runs_first..."
 write_value "$KERNEL_PATH/sched_child_runs_first" 1
 log_info "Done."
 
-: <<'SECTION'
+: <<'DEPRECATED'
+# This setting is not adjustable in FiiO devices and is 0 by default
+# Grouping tasks tweak
+log_info "Disabling Sched Auto Group..."
+write_value "$KERNEL_PATH/sched_autogroup_enabled" 0
+log_info "Done."
+
 # These settings are not currently used as ZRAM has been disabled
 # Specifying ZRAM size
 # JM21 = 512M
@@ -143,7 +135,7 @@ else
     ZRAM_SIZE=805306368
 fi
 log_info "Done."
-SECTION
+DEPRECATED
 
 # Here is the section ripped from SWAP_TORPEDO
 # I would like to refactor this so that the variables match the
@@ -248,7 +240,7 @@ for queue in /sys/block/*/queue; do
 done
 log_info "Done."
 
-: <<'SECTION'
+: <<'DEPRECATED'
 # These settings are not adjustable in FiiO kernels.
 # Tweak scheduler to have less Latency
 # Credits to RedHat & tytydraco & KTweak
@@ -257,7 +249,13 @@ write_value "$KERNEL_PATH/sched_migration_cost_ns" 50000
 write_value "$KERNEL_PATH/sched_min_granularity_ns" 1000000
 write_value "$KERNEL_PATH/sched_wakeup_granularity_ns" 1500000
 log_info "Done."
-SECTION
+
+# Always allow sched boosting on top-app tasks
+# Credits to tytydraco
+log_info "Always allow sched boosting on top-app tasks"
+write_value "$KERNEL_PATH/sched_min_task_util_for_colocation" 0
+log_info "Done."
+DEPRECATED
 
 # Disable Timer migration
 log_info "Disabling Timer Migration"
@@ -294,12 +292,6 @@ if [ -e "$UCLAMP_PATH" ]; then
     log_info "Done."
 fi
 
-# Always allow sched boosting on top-app tasks
-# Credits to tytydraco
-log_info "Always allow sched boosting on top-app tasks"
-write_value "$KERNEL_PATH/sched_min_task_util_for_colocation" 0
-log_info "Done."
-
 # Disable SPI CRC if supported
 if [ -d "$MODULE_PATH/mmc_core" ]; then
     log_info "Disabling SPI CRC"
@@ -309,7 +301,7 @@ fi
 
 # Enable power efficiency
 log_info "Enabling power efficiency..."
-write_value "$MODULE_PATH/workqueue/parameters/power_efficient" Y
+write_value "$MODULE_PATH/workqueue/parameters/power_efficient" 1
 log_info "Done."
 
 # Disable TCP timestamps for reduced overhead
@@ -402,6 +394,7 @@ cmd appops set com.android.systemui RUN_ANY_IN_BACKGROUND ignore
 cmd appops set com.android.vending RUN_ANY_IN_BACKGROUND ignore
 cmd appops set com.android.wifi.resources RUN_ANY_IN_BACKGROUND ignore
 cmd appops set com.fiio.devicevendor RUN_ANY_IN_BACKGROUND ignore
+cmd appops set com.fiio.entersleep RUN_ANY_IN_BACKGROUND ignore
 cmd appops set com.fiio.fiioeq RUN_ANY_IN_BACKGROUND ignore
 cmd appops set com.fiio.scrcpy RUN_ANY_IN_BACKGROUND ignore
 cmd appops set com.fiio.tape RUN_ANY_IN_BACKGROUND ignore
@@ -451,15 +444,17 @@ dumpsys deviceidle whitelist +com.topjohnwu.magisk
 log_info "Done."
 
 # System application Optimizations
-log_info "Applying SYSTEM App Optimizations..."
+log_info "Applying SYSTEM Optimizations..."
 settings put global accessibility_reduce_transparency 1
 settings put global activity_starts_logging_enabled 0
 settings put global disable_window_blurs 1
+settings put global animator_duration_scale 0
+settings put global transition_animation_scale 0
+settings put global window_animation_scale 0
 settings put secure send_action_app_error 0
 settings put system send_security_reports 0
 log_info "Done."
 
-log_info "Optimizations successfully completed."
-cp "$ERROR_LOG" /storage/emulated/0/Download
-cp "$INFO_LOG" /storage/emulated/0/Download
-su -lp 2000 -c "cmd notification post -S bigtext -t 'FiiO Android Tweaker' 'Tag' 'FiiO Android Tweaker successfully installed, Born for Music!'" > /dev/null 2>&1
+# And -- We're done!
+log_info "All optimizations completed."
+su -lp 2000 -c "cmd notification post -S bigtext -t 'FiiO Android Tweaker' 'Tag' 'Born for Music! FiiO Android Tweaker successfully installed. '" > /dev/null 2>&1
