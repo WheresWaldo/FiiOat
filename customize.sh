@@ -5,10 +5,7 @@ FIIO_MODEL=$(getprop ro.product.model)
 
 
 RM_RF() {
-rm /sdcard/Documents/FiiOat/FiiOat.log 2>/dev/null
-rm /sdcard/FiiOat.log 2>/dev/null
-rm /sdcard/FiiOat/FiiOat.txt 2>/dev/null
-rm "${MODPATH}/FiiOat.log" 2>/dev/null
+rm "${MODPATH}/fiioat.log" 2>/dev/null
 rm "${MODPATH}/error.log" 2>/dev/null
 rm "${MODPATH}/LICENSE" 2>/dev/null
 rm "${MODPATH}/README.md" 2>/dev/null
@@ -42,10 +39,9 @@ MOD_EXTRACT
 SET_PERMISSION
 ui_print "- Script execution completed"
 ui_print "- FiiO Android Tweak module is installed"
-ui_print "- Please REBOOT/RESTART the Device to take effects"
+ui_print "- Please REBOOT/RESTART the device to take effect"
 ui_print ""
 ui_print "- WARNING:"
-ui_print "- Developer is NOT responsible for any negative"
-ui_print "  impact this module may exhibit"
-ui_print "- Install and use this modul;e at your own risk"
+ui_print "- While every effort has been made to assure your"
+ui_print "- device safety, use at your own risk."
 ui_print ""

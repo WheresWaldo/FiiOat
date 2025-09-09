@@ -1,9 +1,9 @@
 #!/system/bin/sh
-# FIIOAT v17_r25
+# FIIOAT v17_r27
 # Author: @WheresWaldo (Github)
 # ×××××××××××××××××××××××××× #
 
-# We need to wait until the system is completely booted
+# We will wait until the system is completely booted
 until [ "$(getprop sys.boot_completed)" = 1 ]
    do
    sleep 1
@@ -60,7 +60,7 @@ MODDIR=${0%/*} # Get parent directory
 
 # Modify the filenames for logs
 # DEBUG_LOG="${MODDIR}/debug.log"
-INFO_LOG="${MODDIR}/info.log"
+INFO_LOG="${MODDIR}/fiioat.log"
 ERROR_LOG="${MODDIR}/error.log"
 
 # Prepare log files
@@ -84,10 +84,11 @@ SCHEDUTIL_PATH="/sys/devices/system/cpu/"
 TOTAL_RAM=$(grep -i "MemTotal" /proc/meminfo | awk '{print $2}')
 UCLAMP_PATH="/dev/stune/top-app/uclamp.max"
 ZRAM_PATH="/dev/zram0"
+SWAP_SIZE=$(grep -i SwapTotal /proc/meminfo | tr -d [:alpha:]:" ")
 
 
 # Log starting information
-log_info "Starting FiiOat v17_r25"
+log_info "Starting FiiOat v17_r27"
 log_info "Build Date: 09/07/2025"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $(getprop ro.product.system.model)"
@@ -115,40 +116,14 @@ log_info "Enabling child_runs_first..."
 write_value "$KERNEL_PATH/sched_child_runs_first" 1
 log_info "Done."
 
-: <<'DEPRECATED'
-# This setting is not adjustable in FiiO devices and is 0 by default
-# Grouping tasks tweak
-log_info "Disabling Sched Auto Group..."
-write_value "$KERNEL_PATH/sched_autogroup_enabled" 0
-log_info "Done."
-
-# These settings are not currently used as ZRAM has been disabled
-# Specifying ZRAM size
-# JM21 = 512M
-# M21 = 768M
-log_info "Detected installation model..."
-if [ "$FIIO_MODEL" == "FiiO JM21" ]; then
-    log_info "Applying appropriate zram size for $FIIO_MODEL..."
-    ZRAM_SIZE=536870912
-else
-    log_info "Applying appropriate zram size for $FIIO_MODEL..."
-    ZRAM_SIZE=805306368
-fi
-log_info "Done."
-DEPRECATED
-
 # Here is the section ripped from SWAP_TORPEDO
 # I would like to refactor this so that the variables match the
 # rest of the script
-alias SWAPT='grep -i SwapTotal /proc/meminfo | tr -d [:alpha:]:" "'
-until [ "$(getprop sys.boot_completed)" = 1 ]
-   do
-   sleep 1
-   done
+log_info "Ripping out $SWAP_SIZE zram swap..."
 TL=60
 Step=3
 k=0
-while [ $(SWAPT) -eq 0  ]
+while [ $(SWAP_SIZE) -eq 0  ]
 do
     k=$(( $k + $Step ))
     if [ $k -gt $TL  ] ; then
@@ -194,6 +169,7 @@ do
     esac
 done
 IFS=$saveifs
+log_info "Done."
 
 # Apply RAM tweaks
 # The stat_interval reduces jitter (Credits to kdrag0n)
@@ -240,23 +216,6 @@ for queue in /sys/block/*/queue; do
 done
 log_info "Done."
 
-: <<'DEPRECATED'
-# These settings are not adjustable in FiiO kernels.
-# Tweak scheduler to have less Latency
-# Credits to RedHat & tytydraco & KTweak
-log_info "Tweaking scheduler to reduce latency"
-write_value "$KERNEL_PATH/sched_migration_cost_ns" 50000
-write_value "$KERNEL_PATH/sched_min_granularity_ns" 1000000
-write_value "$KERNEL_PATH/sched_wakeup_granularity_ns" 1500000
-log_info "Done."
-
-# Always allow sched boosting on top-app tasks
-# Credits to tytydraco
-log_info "Always allow sched boosting on top-app tasks"
-write_value "$KERNEL_PATH/sched_min_task_util_for_colocation" 0
-log_info "Done."
-DEPRECATED
-
 # Disable Timer migration
 log_info "Disabling Timer Migration"
 write_value "$KERNEL_PATH/timer_migration" 0
@@ -299,10 +258,11 @@ if [ -d "$MODULE_PATH/mmc_core" ]; then
     log_info "Done."
 fi
 
-# Enable power efficiency
-log_info "Enabling power efficiency..."
-write_value "$MODULE_PATH/workqueue/parameters/power_efficient" 1
-log_info "Done."
+# Enable power efficiency (doesn't work on FiiO kernel)
+# Would love to find a workaround for this
+#log_info "Enabling power efficiency..."
+#write_value "$MODULE_PATH/workqueue/parameters/power_efficient" 1
+#log_info "Done."
 
 # Disable TCP timestamps for reduced overhead
 log_info "Disabling TCP timestamps..."
@@ -411,6 +371,7 @@ log_info "Done."
 
 # Set Music Apps to use unrestricted mode when DAP on Battery power
 # dumpsys deviceidle whitelist +<package_name>
+log_info "Let's whitelist audio apps for unrestricted use..."
 dumpsys deviceidle whitelist +com.amazon.mp3
 dumpsys deviceidle whitelist +com.android.fiio.scrcpy
 dumpsys deviceidle whitelist +com.android.fiioroon
@@ -457,4 +418,4 @@ log_info "Done."
 
 # And -- We're done!
 log_info "All optimizations completed."
-su -lp 2000 -c "cmd notification post -S bigtext -t 'FiiO Android Tweaker' 'Tag' 'Born for Music! FiiO Android Tweaker successfully installed. '" > /dev/null 2>&1
+su -lp 1000 -c "cmd notification post -S bigtext -t 'FiiO Android Tweaker' 'Tag' 'Born for Music! FiiO Android Tweaker successfully installed. '" > /dev/null 2>&1
