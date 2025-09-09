@@ -1,16 +1,16 @@
 # FiiOat
 ** FiiO Andriod Tweaker **. A Magisk module to Tweak Kernel parameters, zswap size, and minimal debloater. This module applies at boot.
 
-Since you have found this page you should already have a fundamental knowledge of how Magisk modules work. Other than a version of Magisk newer that v20.4 and a rooted FiiO device there are not other prerequisites. Since this module is a tweak and debloat combination it is suggested that you do not run any other kernel tweak modules or debloating modules for Android at the same time.
+Since you have found this page you should already have a fundamental knowledge of how Magisk modules work. Other than a version of Magisk newer that v20.4 and a rooted FiiO device there are no other prerequisites. Since this module is a tweak and debloat combination, it is suggested that you do not run any other kernel tweak modules or debloating modules for Android at the same time.
 
 This module is a highly modified version of YAKT by NotZeetea(@github.com) [https://github.com/NotZeetaa/YAKT]
 Parts of this module have been sourced from other shell scripts and work done by MattClark18 (@Head-Fi.org)
 
-WHile this module is specifically designed for the FiiO M21/JM21 DAP it may work on other devices. Note that all the changes made by this module are available in the FiiO devices and may not be available in DAPs made by other manufacturers, in other word, it might or might not work on other DAPs!
-No warranty as to servicablity of this module is eityher expressed or implied. User assumes all risk by downloading and using this module.
+While this module is specifically designed for the FiiO M21/JM21 DAP it may work on other devices. Note that all the changes made by this module are available in the FiiO kernel (Android 13 devices) and may not be available in DAPs made by other manufacturers, in other word, it might or might not work on other DAPs!
+
+No warranty as to servicablity of this module is either expressed or implied. User assumes all risk by downloading and using this module.
 
 ## What this module does:
-...
 - Reduces Jitter and Latency
 - Optimizes Ram Management
 - Disables scheduler logs/stats
@@ -28,7 +28,6 @@ No warranty as to servicablity of this module is eityher expressed or implied. U
 - Provides smooth and balanced running of Music apps
 ...
 ## What the module doesn't:
-...
 - Require additional modules for complete implementation
 - Require additional applications
 - Change the soundstage or any other aspect of the sound!
@@ -36,23 +35,18 @@ No warranty as to servicablity of this module is eityher expressed or implied. U
 - Change settings that don't need changing
 ...
 ## Notes:
-...
 - This is not a perfomance/gaming module!
 ...
-## How to flash:
-...
+## How to install:
 - Just flash in Magisk and reboot
 - And that's it ;)
 ...
 ## How to check logs:
-....
 - Check info.log text file in /data/adb/modules/fiioat/ folder
 - Check error.log text file in /data/adb/modules/fiioat/ folder
 - It should look like this (Not exactly ofc):
-...
-## Screenshot of .log file
+Screenshot of .log file <to be inserted>
 ## How to Contribute:
-...
 - Fork the Repo
 - Edit tweaks according to your info/docs
 - Commit with proper name and info/docs about what you did
