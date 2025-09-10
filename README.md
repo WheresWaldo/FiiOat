@@ -45,7 +45,8 @@ No warranty as to servicablity of this module is either expressed or implied. Us
 - Check info.log text file in /data/adb/modules/fiioat/ folder
 - Check error.log text file in /data/adb/modules/fiioat/ folder
 - It should look like this (Not exactly ofc):
-Screenshot of .log file <to be inserted>
+- Screenshot of .log file <to be inserted>
+...
 ## How to Contribute:
 - Fork the Repo
 - Edit tweaks according to your info/docs
