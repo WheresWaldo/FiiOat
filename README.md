@@ -26,6 +26,8 @@ No warranty as to servicablity of this module is either expressed or implied. Us
 - Removes zswap (compressed RAM)
 - Forces FiiO secondary apps to not autorun
 - Small SYSTEM application tweaks
+-- Window animations
+-- Blur effects
 - Provides smooth and balanced running of Music apps
 
 

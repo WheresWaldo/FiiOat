@@ -404,16 +404,24 @@ dumpsys deviceidle whitelist +com.spotfy.music
 dumpsys deviceidle whitelist +com.topjohnwu.magisk
 log_info "Done."
 
-# System application Optimizations
+# System / application Optimizations
 log_info "Applying SYSTEM Optimizations..."
 settings put global accessibility_reduce_transparency 1
 settings put global activity_starts_logging_enabled 0
-settings put global disable_window_blurs 1
 settings put global animator_duration_scale 0
 settings put global transition_animation_scale 0
 settings put global window_animation_scale 0
 settings put secure send_action_app_error 0
 settings put system send_security_reports 0
+resetprop -n ro.launcher.blur.appLaunch 0
+resetprop -n ro.surface_flinger.supports_background_blur 0
+resetprop -n ro.sf.blurs_are_expensive 0
+resetprop -n persist.sys.sf.disable_blurs true
+resetprop -n enable_blurs_on_windows 0
+resetprop -n disableBlurs true
+resetprop -n ro.sf.blurs_are_caro 1
+resetprop -n ro.miui.has_real_blur 0
+resetprop -n persist.sys.background_blur_supported false
 log_info "Done."
 
 # And -- We're done!
