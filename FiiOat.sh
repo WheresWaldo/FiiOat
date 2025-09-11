@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# FIIOAT v17_r27nb
+# FIIOAT v17_r28nb
 # Author: @WheresWaldo (Github)
 # ×××××××××××××××××××××××××× #
 
@@ -298,6 +298,7 @@ pm disable-user --user 0 "com.android.managedprovisioning"
 pm disable-user --user 0 "com.android.providers.blockednumber"
 pm disable-user --user 0 "com.android.traceur"
 pm disable-user --user 0 "com.example.fiiotestappliction"
+pm disable-user --user 0 "com.fiio.market"
 pm disable-user --user 0 "com.google.android.apps.nbu.files"
 pm disable-user --user 0 "com.google.android.syncadapters.calendar"
 pm disable-user --user 0 "com.google.android.syncadapters.contacts"
@@ -321,7 +322,6 @@ log_info "Stopping secondary applications..."
 am force-stop com.android.aboutfiio
 am force-stop com.fiio.devicevendor
 am force-stop com.fiio.entersleep
-am force-stop com.fiio.market
 am force-stop com.fiio.scrcpy
 am force-stop com.fiio.tape
 log_info "Done."
