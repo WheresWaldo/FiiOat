@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# FIIOAT v17_r27
+# FIIOAT v17_r28
 # Author: @WheresWaldo (Github)
 # ×××××××××××××××××××××××××× #
 
@@ -88,7 +88,7 @@ SWAP_SIZE=$(grep -i SwapTotal /proc/meminfo | tr -d [:alpha:]:" ")
 
 
 # Log starting information
-log_info "Starting FiiOat v17_r27"
+log_info "Starting FiiOat v17_r28"
 log_info "Build Date: 09/07/2025"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $(getprop ro.product.system.model)"
@@ -298,6 +298,7 @@ pm disable-user --user 0 "com.android.managedprovisioning"
 pm disable-user --user 0 "com.android.providers.blockednumber"
 pm disable-user --user 0 "com.android.traceur"
 pm disable-user --user 0 "com.example.fiiotestappliction"
+pm disable-user --user 0 "com.fiio.market"
 pm disable-user --user 0 "com.google.android.apps.nbu.files"
 pm disable-user --user 0 "com.google.android.syncadapters.calendar"
 pm disable-user --user 0 "com.google.android.syncadapters.contacts"
@@ -321,7 +322,6 @@ log_info "Stopping secondary applications..."
 am force-stop com.android.aboutfiio
 am force-stop com.fiio.devicevendor
 am force-stop com.fiio.entersleep
-am force-stop com.fiio.market
 am force-stop com.fiio.scrcpy
 am force-stop com.fiio.tape
 log_info "Done."
