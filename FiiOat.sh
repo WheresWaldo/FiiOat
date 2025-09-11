@@ -89,7 +89,7 @@ SWAP_SIZE=$(grep -i SwapTotal /proc/meminfo | tr -d [:alpha:]:" ")
 
 # Log starting information
 log_info "Starting FiiOat v17_r28"
-log_info "Build Date: 09/07/2025"
+log_info "Build Date: 09/11/2025"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $(getprop ro.product.system.model)"
 log_info "Brand: $(getprop ro.product.system.brand)"
