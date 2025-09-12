@@ -425,6 +425,8 @@ resetprop -n persist.sys.background_blur_supported false
 log_info "Done."
 
 # And -- We're done!
-cp "${MODDIR}/debug.log" 
+cp "${MODDIR}/debug.log" /storage/emulated/0/Download
+cp "${MODDIR}/info.log" /storage/emulated/0/Download
+cp "${MODDIR}/error.log" /storage/emulated/0/Download
 log_info "All optimizations completed."
 su -lp 1000 -c "cmd notification post -S bigtext -t 'FiiO Android Tweaker' 'Tag' 'Born for Music! FiiO Android Tweaker successfully installed. '" > /dev/null 2>&1
