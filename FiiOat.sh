@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# FIIOAT v17_r28nb
+# FIIOAT v17_r28nb-debug
 # Author: @WheresWaldo (Github)
 # ×××××××××××××××××××××××××× #
 
@@ -28,10 +28,10 @@ log_error() {
 }
 
 # Useful for debugging ig ¯\_(ツ)_/¯
-# shellcheck disable=SC3033
-# log_debug() {
-#     log_message "$DEBUG_LOG" "$1"
-# }
+shellcheck disable=SC3033
+log_debug() {
+    log_message "$DEBUG_LOG" "$1"
+}
 
 # Function to write a value to a specified file
 write_value() {
@@ -59,8 +59,8 @@ write_value() {
 MODDIR=${0%/*} # Get parent directory
 
 # Modify the filenames for logs
-# DEBUG_LOG="${MODDIR}/debug.log"
-INFO_LOG="${MODDIR}/fiioat.log"
+DEBUG_LOG="${MODDIR}/debug.log"
+INFO_LOG="${MODDIR}/info.log"
 ERROR_LOG="${MODDIR}/error.log"
 
 # Prepare log files
@@ -88,8 +88,8 @@ SWAP_SIZE=$(grep -i SwapTotal /proc/meminfo | tr -d [:alpha:]:" ")
 
 
 # Log starting information
-log_info "Starting FiiOat v17_r28nb"
-log_info "Build Date: 09/11/2025"
+log_info "Starting FiiOat v17_r28nb-debug"
+log_info "Build Date: 09/12/2025"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $(getprop ro.product.system.model)"
 log_info "Brand: $(getprop ro.product.system.brand)"
@@ -425,5 +425,6 @@ resetprop -n persist.sys.background_blur_supported false
 log_info "Done."
 
 # And -- We're done!
+cp "${MODDIR}/debug.log" 
 log_info "All optimizations completed."
 su -lp 1000 -c "cmd notification post -S bigtext -t 'FiiO Android Tweaker' 'Tag' 'Born for Music! FiiO Android Tweaker successfully installed. '" > /dev/null 2>&1
