@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# FIIOAT v17_r28
+# FIIOAT v17_r29
 # Author: @WheresWaldo (Github)
 # ×××××××××××××××××××××××××× #
 
@@ -27,12 +27,6 @@ log_error() {
     log_message "$ERROR_LOG" "$1"
 }
 
-# Useful for debugging ig ¯\_(ツ)_/¯
-# shellcheck disable=SC3033
-# log_debug() {
-#     log_message "$DEBUG_LOG" "$1"
-# }
-
 # Function to write a value to a specified file
 write_value() {
     local file_path="$1"
@@ -59,18 +53,18 @@ write_value() {
 MODDIR=${0%/*} # Get parent directory
 
 # Modify the filenames for logs
-# DEBUG_LOG="${MODDIR}/debug.log"
 INFO_LOG="${MODDIR}/fiioat.log"
 ERROR_LOG="${MODDIR}/error.log"
 
 # Prepare log files
-# :> "$DEBUG_LOG"
 :> "$INFO_LOG"
 :> "$ERROR_LOG"
 
 # Variables
 ANDROID_VERSION=$(getprop ro.build.version.release)
 FIIO_MODEL=$(getprop ro.product.model)
+TOTAL_RAM=$(grep -i "MemTotal" /proc/meminfo | awk '{print $2}')
+SWAP_SIZE=$(grep -i SwapTotal /proc/meminfo | tr -d [:alpha:]:" ")
 APP_PATH="/system/app"
 CPUFREQ_PATH="/sys/devices/system/cpu/cpufreq"
 CPUSET_PATH="/dev/cpuset"
@@ -81,14 +75,12 @@ MGLRU_PATH="/sys/kernel/mm/lru_gen"
 MODULE_PATH="/sys/module"
 PRIVAPP_PATH="/system/priv-app"
 SCHEDUTIL_PATH="/sys/devices/system/cpu/"
-TOTAL_RAM=$(grep -i "MemTotal" /proc/meminfo | awk '{print $2}')
 UCLAMP_PATH="/dev/stune/top-app/uclamp.max"
 ZRAM_PATH="/dev/zram0"
-SWAP_SIZE=$(grep -i SwapTotal /proc/meminfo | tr -d [:alpha:]:" ")
 
 
 # Log starting information
-log_info "Starting FiiOat v17_r28"
+log_info "Starting FiiOat v17_r29"
 log_info "Build Date: 09/11/2025"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $(getprop ro.product.system.model)"
@@ -260,9 +252,9 @@ fi
 
 # Enable power efficiency (doesn't work on FiiO kernel)
 # Would love to find a workaround for this
-#log_info "Enabling power efficiency..."
-#write_value "$MODULE_PATH/workqueue/parameters/power_efficient" 1
-#log_info "Done."
+#  log_info "Enabling power efficiency..."
+#  write_value "$MODULE_PATH/workqueue/parameters/power_efficient" 1
+#  log_info "Done."
 
 # Disable TCP timestamps for reduced overhead
 log_info "Disabling TCP timestamps..."
@@ -376,7 +368,7 @@ dumpsys deviceidle whitelist +com.amazon.mp3
 dumpsys deviceidle whitelist +com.android.fiio.scrcpy
 dumpsys deviceidle whitelist +com.android.fiioroon
 dumpsys deviceidle whitelist +com.android.fiioupdate
-dumpsys deviceidle whitelist +com.apple.adroid.music
+dumpsys deviceidle whitelist +com.apple.android.music
 dumpsys deviceidle whitelist +com.apple.android.music.classical
 dumpsys deviceidle whitelist +com.aspiro.tidal
 dumpsys deviceidle whitelist +com.bandcamp.android

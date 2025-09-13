@@ -7,6 +7,7 @@ FIIO_MODEL=$(getprop ro.product.model)
 RM_RF() {
 rm "${MODPATH}/fiioat.log" 2>/dev/null
 rm "${MODPATH}/error.log" 2>/dev/null
+rm "${MODPATH}/debug.log" 2>/dev/null
 rm "${MODPATH}/LICENSE" 2>/dev/null
 rm "${MODPATH}/README.md" 2>/dev/null
 }

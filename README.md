@@ -47,7 +47,7 @@ No warranty as to servicablity of this module is either expressed or implied. Us
 
 
 ## How to check logs:
-- Check info.log text file in /data/adb/modules/fiioat/ folder
+- Check fiioat.log text file in /data/adb/modules/fiioat/ folder
 - Check error.log text file in /data/adb/modules/fiioat/ folder
 - It should look like this (Not exactly ofc):
 <img width="261" height="475" alt="info log" src="https://github.com/user-attachments/assets/884eccbe-c7ca-435b-8b63-ca15f112f3b8" />
