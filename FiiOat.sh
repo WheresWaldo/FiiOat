@@ -1,6 +1,9 @@
 #!/system/bin/sh
-# FIIOAT v17_r29nb
+# FIIOAT v17_r35nb
 # Author: @WheresWaldo (Github)
+#
+# Don't forget to change the data together with the version number.
+#
 # ×××××××××××××××××××××××××× #
 
 # We will wait until the system is completely booted
@@ -64,7 +67,6 @@ ERROR_LOG="${MODDIR}/error.log"
 ANDROID_VERSION=$(getprop ro.build.version.release)
 FIIO_MODEL=$(getprop ro.product.model)
 TOTAL_RAM=$(grep -i "MemTotal" /proc/meminfo | awk '{print $2}')
-SWAP_SIZE=$(grep -i SwapTotal /proc/meminfo | tr -d [:alpha:]:" ")
 APP_PATH="/system/app"
 CPUFREQ_PATH="/sys/devices/system/cpu/cpufreq"
 CPUSET_PATH="/dev/cpuset"
@@ -79,7 +81,7 @@ UCLAMP_PATH="/dev/stune/top-app/uclamp.max"
 ZRAM_PATH="/dev/zram0"
 
 # Log starting information
-log_info "Starting FiiOat v17_r29nb"
+log_info "Starting FiiOat v17_r35nb"
 log_info "Build Date: 09/13/2025"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $(getprop ro.product.system.model)"
@@ -110,6 +112,7 @@ log_info "Done."
 # Here is the section ripped from SWAP_TORPEDO
 # I would like to refactor this so that the variables match the
 # rest of the script
+alias SWAP_SIZE='grep -i SwapTotal /proc/meminfo | tr -d [:alpha:]:" "'
 log_info "Ripping out $SWAP_SIZE zram swap..."
 TL=60
 Step=3
@@ -395,7 +398,7 @@ dumpsys deviceidle whitelist +com.spotfy.music
 dumpsys deviceidle whitelist +com.topjohnwu.magisk
 log_info "Done."
 
-# System and application Optimizations
+# System and application optimizations
 log_info "Applying SYSTEM Optimizations..."
 settings put global accessibility_reduce_transparency 1
 settings put global activity_starts_logging_enabled 0
@@ -417,4 +420,4 @@ log_info "Done."
 
 # And -- We're done!
 log_info "All optimizations completed."
-su -lp 1000 -c "cmd notification post -S bigtext -t 'FiiO Android Tweaker' 'Tag' 'Born for Music! FiiO Android Tweaker successfully installed. '" > /dev/null 2>&1
+su -lp 2000 -c "cmd notification post -S bigtext -t 'FiiO Android Tweaker' 'Tag' 'Born for Music! FiiO Android Tweaker successfully installed. '" > /dev/null 2>&1
