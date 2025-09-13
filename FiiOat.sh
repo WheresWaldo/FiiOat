@@ -1,9 +1,9 @@
 #!/system/bin/sh
-# FIIOAT v17_r29
+# FIIOAT v17_r37
 # Author: @WheresWaldo (Github)
 # ×××××××××××××××××××××××××× #
 
-# We will wait until the system is completely booted
+# We need to wait until the system is completely booted
 until [ "$(getprop sys.boot_completed)" = 1 ]
    do
    sleep 1
@@ -53,7 +53,7 @@ write_value() {
 MODDIR=${0%/*} # Get parent directory
 
 # Modify the filenames for logs
-INFO_LOG="${MODDIR}/fiioat.log"
+INFO_LOG="${MODDIR}/info.log"
 ERROR_LOG="${MODDIR}/error.log"
 
 # Prepare log files
@@ -63,8 +63,6 @@ ERROR_LOG="${MODDIR}/error.log"
 # Variables
 ANDROID_VERSION=$(getprop ro.build.version.release)
 FIIO_MODEL=$(getprop ro.product.model)
-TOTAL_RAM=$(grep -i "MemTotal" /proc/meminfo | awk '{print $2}')
-SWAP_SIZE=$(grep -i SwapTotal /proc/meminfo | tr -d [:alpha:]:" ")
 APP_PATH="/system/app"
 CPUFREQ_PATH="/sys/devices/system/cpu/cpufreq"
 CPUSET_PATH="/dev/cpuset"
@@ -75,13 +73,14 @@ MGLRU_PATH="/sys/kernel/mm/lru_gen"
 MODULE_PATH="/sys/module"
 PRIVAPP_PATH="/system/priv-app"
 SCHEDUTIL_PATH="/sys/devices/system/cpu/"
+TOTAL_RAM=$(grep -i "MemTotal" /proc/meminfo | awk '{print $2}')
 UCLAMP_PATH="/dev/stune/top-app/uclamp.max"
 ZRAM_PATH="/dev/zram0"
 
 
 # Log starting information
-log_info "Starting FiiOat v17_r29"
-log_info "Build Date: 09/11/2025"
+log_info "Starting FiiOat v17_r37"
+log_info "Build Date: 09/13/2025"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $(getprop ro.product.system.model)"
 log_info "Brand: $(getprop ro.product.system.brand)"
@@ -111,11 +110,15 @@ log_info "Done."
 # Here is the section ripped from SWAP_TORPEDO
 # I would like to refactor this so that the variables match the
 # rest of the script
-log_info "Ripping out $SWAP_SIZE zram swap..."
+alias SWAPT='grep -i SwapTotal /proc/meminfo | tr -d [:alpha:]:" "'
+until [ "$(getprop sys.boot_completed)" = 1 ]
+   do
+   sleep 1
+   done
 TL=60
 Step=3
 k=0
-while [ $(SWAP_SIZE) -eq 0  ]
+while [ $(SWAPT) -eq 0  ]
 do
     k=$(( $k + $Step ))
     if [ $k -gt $TL  ] ; then
@@ -161,7 +164,6 @@ do
     esac
 done
 IFS=$saveifs
-log_info "Done."
 
 # Apply RAM tweaks
 # The stat_interval reduces jitter (Credits to kdrag0n)
@@ -250,12 +252,6 @@ if [ -d "$MODULE_PATH/mmc_core" ]; then
     log_info "Done."
 fi
 
-# Enable power efficiency (doesn't work on FiiO kernel)
-# Would love to find a workaround for this
-#  log_info "Enabling power efficiency..."
-#  write_value "$MODULE_PATH/workqueue/parameters/power_efficient" 1
-#  log_info "Done."
-
 # Disable TCP timestamps for reduced overhead
 log_info "Disabling TCP timestamps..."
 write_value "$IPV4_PATH/tcp_timestamps" 0
@@ -314,6 +310,7 @@ log_info "Stopping secondary applications..."
 am force-stop com.android.aboutfiio
 am force-stop com.fiio.devicevendor
 am force-stop com.fiio.entersleep
+am force-stop com.fiio.market
 am force-stop com.fiio.scrcpy
 am force-stop com.fiio.tape
 log_info "Done."
@@ -363,7 +360,6 @@ log_info "Done."
 
 # Set Music Apps to use unrestricted mode when DAP on Battery power
 # dumpsys deviceidle whitelist +<package_name>
-log_info "Let's whitelist audio apps for unrestricted use..."
 dumpsys deviceidle whitelist +com.amazon.mp3
 dumpsys deviceidle whitelist +com.android.fiio.scrcpy
 dumpsys deviceidle whitelist +com.android.fiioroon
@@ -406,8 +402,9 @@ settings put global transition_animation_scale 0
 settings put global window_animation_scale 0
 settings put secure send_action_app_error 0
 settings put system send_security_reports 0
+resetprop -n persist.sys.background_blur_supported false
 log_info "Done."
 
 # And -- We're done!
 log_info "All optimizations completed."
-su -lp 1000 -c "cmd notification post -S bigtext -t 'FiiO Android Tweaker' 'Tag' 'Born for Music! FiiO Android Tweaker successfully installed. '" > /dev/null 2>&1
+su -lp 2000 -c "cmd notification post -S bigtext -t 'FiiO Android Tweaker' 'Tag' 'Born for Music! FiiO Android Tweaker successfully installed. '" > /dev/null 2>&1
