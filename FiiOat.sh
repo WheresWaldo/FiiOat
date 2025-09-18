@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# FIIOAT v17_r37nb
+# FIIOAT v17_r38nb
 # Author: @WheresWaldo (Github)
 # ×××××××××××××××××××××××××× #
 
@@ -79,8 +79,8 @@ ZRAM_PATH="/dev/zram0"
 
 
 # Log starting information
-log_info "Starting FiiOat v17_r37nb"
-log_info "Build Date: 09/13/2025"
+log_info "Starting FiiOat v17_r38nb"
+log_info "Build Date: 09/18/2025"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $(getprop ro.product.system.model)"
 log_info "Brand: $(getprop ro.product.system.brand)"
