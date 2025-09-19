@@ -25,15 +25,14 @@ ui_print "- Extracting Module Files"
 unzip -o "$ZIPFILE" FiiOat.sh -d "$MODPATH" >&2
 unzip -o "$ZIPFILE" service.sh -d "$MODPATH" >&2
 unzip -o "$ZIPFILE" module.prop -d "$MODPATH" >&2
-unzip -o "$ZIPFILE" update.json -d "$MODPATH" >&2
 unzip -o "$ZIPFILE" uninstall.sh -d "$MODPATH" >&2
+unzip -o "$ZIPFILE" update.json -d "$MODPATH" >&2
 }
 
 SET_PERMISSION() {
 ui_print "- Setting Permissions"
 set_perm_recursive "$MODPATH" 0 0 0755 0644
 set_perm_recursive "${MODPATH}/FiiOat.sh" 0 0 0755 0700
-set_perm_recursive "${MODPATH}/uninstall.sh" 0 0 0755 0700
 set_parm_recursive "/sys/devices/system/cpu/cpufreq" 0 0 0755 0644
 set_parm_recursive "/sys/module/workqueue/parameters" 0 0 0755 0644
 }

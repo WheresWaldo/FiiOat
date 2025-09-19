@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# FIIOAT v17_r38nb
+# FIIOAT v17_r39nb
 # Author: @WheresWaldo (Github)
 # ×××××××××××××××××××××××××× #
 
@@ -79,8 +79,8 @@ ZRAM_PATH="/dev/zram0"
 
 
 # Log starting information
-log_info "Starting FiiOat v17_r38nb"
-log_info "Build Date: 09/18/2025"
+log_info "Starting FiiOat v17_r39nb"
+log_info "Build Date: 09/19/2025"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $(getprop ro.product.system.model)"
 log_info "Brand: $(getprop ro.product.system.brand)"
@@ -411,6 +411,11 @@ resetprop -n disableBlurs true
 resetprop -n ro.sf.blurs_are_caro 1
 resetprop -n ro.miui.has_real_blur 0
 resetprop -n persist.sys.background_blur_supported false
+log_info "Done."
+
+# Let's increase display saturation
+log_info "Increasing screen saturaTION..."
+service call SurfaceFlinger 1022 f 1.5
 log_info "Done."
 
 # And -- We're done!
