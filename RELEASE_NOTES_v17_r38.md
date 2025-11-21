@@ -1,87 +1,87 @@
 # FiiOat v17_r38 - Release Notes
 
-## 🎉 Release Estable - Probado y Funcionando
+## 🎉 Stable Release - Tested and Working
 
-**Fecha de Release**: 2025-02-07  
-**Versión**: v17_r38  
-**Estado**: ✅ **ESTABLE Y PROBADO**
+**Release Date**: 2025-02-07  
+**Version**: v17_r38  
+**Status**: ✅ **STABLE AND TESTED**
 
 ---
 
-## 📋 Resumen
+## 📋 Summary
 
-Esta versión incluye mejoras significativas para compatibilidad con firmware 1.0.8 y mejor manejo de paquetes del sistema. **Probado exitosamente en FiiO JM21**.
+This version includes significant improvements for firmware 1.0.8 compatibility and better system package handling. **Successfully tested on FiiO JM21**.
 
-## ✨ Nuevas Características
+## ✨ New Features
 
-### Soporte para Firmware 1.0.8
-- Detección automática de firmware 1.0.8
-- Ajustes específicos optimizados para esta versión
-- Compatibilidad retroactiva con versiones anteriores
+### Firmware 1.0.8 Support
+- Automatic firmware 1.0.8 detection
+- Optimized specific tweaks for this version
+- Backward compatibility with previous versions
 
-### Funciones Helper Mejoradas
-- **Verificación de Paquetes**: Evita errores cuando los paquetes no existen
-- **Cache de Paquetes**: Mejor rendimiento en firmware 1.0.8
-- **Logging Detallado**: Información clara sobre qué se procesa y qué se omite
+### Improved Helper Functions
+- **Package Verification**: Prevents errors when packages don't exist
+- **Package Cache**: Better performance on firmware 1.0.8
+- **Detailed Logging**: Clear information about what is processed and what is skipped
 
-### Mejoras de Código
-- Funciones reutilizables para mejor mantenibilidad
-- Mejor manejo de errores
-- Código más limpio y organizado
-- Corrección de typos
+### Code Improvements
+- Reusable functions for better maintainability
+- Better error handling
+- Cleaner and more organized code
+- Typo fixes
 
-## 🔧 Cambios Técnicos
+## 🔧 Technical Changes
 
-### Optimizaciones Aplicadas
+### Applied Optimizations
 - ✅ CPU Schedutil Rate-Limits
-- ✅ Frecuencias Mínimas CPU (E-core y P-core a 300MHz)
+- ✅ Minimum CPU Frequencies (E-core and P-core at 300MHz)
 - ✅ Child Runs First (CRF)
-- ✅ Gestión de Memoria (RAM Tweaks)
-- ✅ MGLRU Tweaks (si está disponible)
+- ✅ Memory Management (RAM Tweaks)
+- ✅ MGLRU Tweaks (if available)
 - ✅ UCLAMP Scheduler Tweaks
-- ✅ Desactivación de ZRAM/ZSWAP
-- ✅ Optimizaciones de Red (TCP)
-- ✅ Debloating de aplicaciones innecesarias
-- ✅ Control de apps en segundo plano
-- ✅ Whitelist de apps de música
+- ✅ ZRAM/ZSWAP Disabling
+- ✅ Network Optimizations (TCP)
+- ✅ Unnecessary Apps Debloating
+- ✅ Background Apps Control
+- ✅ Music Apps Whitelist
 
-### Funciones Nuevas
-- `package_exists()` - Verifica si un paquete está instalado
-- `disable_pkg()` - Desactiva paquetes solo si existen
-- `force_stop_pkg()` - Detiene paquetes solo si existen
-- `set_appops_background()` - Configura permisos solo si el paquete existe
-- `whitelist_pkg()` - Añade a whitelist solo si el paquete existe
+### New Functions
+- `package_exists()` - Checks if a package is installed
+- `disable_pkg()` - Disables packages only if they exist
+- `force_stop_pkg()` - Stops packages only if they exist
+- `set_appops_background()` - Sets permissions only if package exists
+- `whitelist_pkg()` - Adds to whitelist only if package exists
 
-## 🐛 Correcciones
+## 🐛 Fixes
 
-- Corregido typo: "frrequency" → "frequency"
-- Corregido typo: "permisssions" → "permissions"
-- Corregido typo: "spotfy" → "spotify"
-- Eliminado wait duplicado para `sys.boot_completed`
+- Fixed typo: "frrequency" → "frequency"
+- Fixed typo: "permisssions" → "permissions"
+- Fixed typo: "spotfy" → "spotify"
+- Removed duplicate wait for `sys.boot_completed`
 
-## 📊 Resultados de Prueba
+## 📊 Test Results
 
-**Dispositivo de Prueba**: FiiO JM21  
+**Test Device**: FiiO JM21  
 **Firmware**: TKQ1.230110.001 (Android 13)  
 **Kernel**: 5.15.41-android13-8-gdfab679e3463-dirty
 
-### Resultados:
-- ✅ **Ejecución**: Completa sin errores
-- ✅ **Log de Errores**: Vacío (sin errores)
-- ✅ **Optimizaciones**: Todas aplicadas correctamente
-- ✅ **Paquetes Procesados**: 146 detectados, 30+ deshabilitados
-- ✅ **Compatibilidad**: Funciona en firmware no-1.0.8 también
+### Results:
+- ✅ **Execution**: Complete without errors
+- ✅ **Error Log**: Empty (no errors)
+- ✅ **Optimizations**: All applied correctly
+- ✅ **Processed Packages**: 146 detected, 30+ disabled
+- ✅ **Compatibility**: Works on non-1.0.8 firmware as well
 
-## 📦 Instalación
+## 📦 Installation
 
-### Método Rápido:
-1. Descarga `FiiOat-v17_r38-main.zip` desde este release
-2. Abre Magisk Manager
-3. Ve a Módulos → Instalar desde almacenamiento
-4. Selecciona el ZIP descargado
-5. Reinicia el dispositivo
+### Quick Method:
+1. Download `FiiOat-v17_r38-main.zip` from this release
+2. Open Magisk Manager
+3. Go to Modules → Install from storage
+4. Select the downloaded ZIP
+5. Reboot device
 
-### Desde Código Fuente:
+### From Source Code:
 ```bash
 git clone https://github.com/kuiporro/FiiOat.git
 cd FiiOat
@@ -90,16 +90,13 @@ chmod +x build_module.sh
 ./build_module.sh
 ```
 
-## 📚 Documentación
+## 📚 Documentation
 
-- **Guía de Instalación**: [GUIA_INSTALACION_PRUEBA.md](GUIA_INSTALACION_PRUEBA.md)
-- **Análisis del Módulo**: [ANALISIS_MODULO.md](ANALISIS_MODULO.md)
-- **Resultados de Prueba**: [RESULTADOS_PRUEBA.md](RESULTADOS_PRUEBA.md)
-- **Resumen Rápido**: [RESUMEN_RAPIDO.md](RESUMEN_RAPIDO.md)
+- **Installation Guide**: [INSTALLATION_GUIDE.md](INSTALLATION_GUIDE.md)
 
-## 🔍 Verificación
+## 🔍 Verification
 
-Después de instalar, verifica los logs:
+After installing, check the logs:
 
 ```bash
 adb shell
@@ -108,44 +105,42 @@ cat /data/adb/modules/fiioat/info.log
 cat /data/adb/modules/fiioat/error.log
 ```
 
-Deberías ver "All optimizations completed" en `info.log` y ningún error en `error.log`.
+You should see "All optimizations completed" in `info.log` and no errors in `error.log`.
 
-## ⚠️ Notas Importantes
+## ⚠️ Important Notes
 
-- Este módulo está diseñado específicamente para FiiO JM21 y M21
-- Compatible con Android 13
-- Requiere Magisk v20.4 o superior
-- Los cambios son systemless (se pueden revertir desinstalando)
-- **NO modifica el sonido directamente**, solo optimiza el sistema
+- This module is specifically designed for FiiO JM21 and M21
+- Compatible with Android 13
+- Requires Magisk v20.4 or higher
+- Changes are systemless (can be reverted by uninstalling)
+- **Does NOT modify sound directly**, only optimizes the system
 
-## 🙏 Créditos
+## 🙏 Credits
 
-- **Autor Original**: @WheresWaldo (Github/Head-Fi)
-- **Basado en**: YAKT por NotZeetea
-- **Contribuciones**: MattClark18 y otros miembros de Head-Fi.org
+- **Original Author**: @WheresWaldo (Github/Head-Fi)
+- **Based on**: YAKT by NotZeetea
+- **Contributions**: MattClark18 and other Head-Fi.org members
 
-## 📝 Changelog Completo
+## 📝 Full Changelog
 
 ### v17_r38 (2025-02-07)
-- ✅ Actualización a v17_r38
-- ✅ Soporte para firmware 1.0.8
-- ✅ Funciones helper para verificación de paquetes
-- ✅ Cache de lista de paquetes instalados
-- ✅ Mejoras en logging
-- ✅ Corrección de typos
-- ✅ Eliminación de código duplicado
-- ✅ Documentación completa en español
-- ✅ Script de build automatizado
+- ✅ Updated to v17_r38
+- ✅ Firmware 1.0.8 support
+- ✅ Helper functions for package verification
+- ✅ Installed packages list cache
+- ✅ Logging improvements
+- ✅ Typo fixes
+- ✅ Duplicate code removal
+- ✅ Automated build script
 
-### Comparado con v17_r37:
-- Mejor compatibilidad con diferentes versiones de firmware
-- Menos errores cuando los paquetes no existen
-- Logging más detallado y útil
-- Código más mantenible
+### Compared to v17_r37:
+- Better compatibility with different firmware versions
+- Fewer errors when packages don't exist
+- More detailed and useful logging
+- More maintainable code
 
 ---
 
-**¡Gracias por usar FiiOat!** 🎵
+**Thank you for using FiiOat!** 🎵
 
-Para reportar problemas o sugerencias, abre un Issue en: https://github.com/kuiporro/FiiOat/issues
-
+To report issues or suggestions, open an Issue at: https://github.com/kuiporro/FiiOat/issues
