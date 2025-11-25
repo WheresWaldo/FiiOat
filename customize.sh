@@ -2,7 +2,7 @@
 # shellcheck disable=SC2034
 SKIPUNZIP=1
 FIIO_MODEL=$(getprop ro.product.model)
-FIRMWARE_VERSION=$(getprop ro.product.ota.package_name | awk '{print substr($0,10,5)}')
+FIRMWARE_VERSION=$(getprop ro.product.version)
 
 
 RM_RF() {
@@ -40,15 +40,15 @@ set_parm_recursive "/sys/devices/system/cpu/cpufreq" 0 0 0755 0644
 set_parm_recursive "/sys/module/workqueue/parameters" 0 0 0755 0644
 }
 
+ui_print "--------------------------------------------------"
 ui_print "- Ready to begin real work"
 set -x
 MOD_PRINT
 RM_RF
-ui_print "- Old files removed"
 MOD_EXTRACT
-ui_print "- All files extracted"
 SET_PERMISSION
-ui_print "--------------------------------------------------"
+ui_print "- Old files removed"
+ui_print "- New files extracted"
 ui_print "- All permissions successfully set"
 ui_print "-"
 ui_print "- Script execution completed"
@@ -59,4 +59,4 @@ ui_print "--------------------------------------------------"
 ui_print "- WARNING:"
 ui_print "- While every effort has been made to assure your"
 ui_print "- device safety, use at your own risk."
-ui_print ""
+ui_print "--------------------------------------------------"
