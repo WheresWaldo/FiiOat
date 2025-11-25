@@ -2,6 +2,7 @@
 # shellcheck disable=SC2034
 SKIPUNZIP=1
 FIIO_MODEL=$(getprop ro.product.model)
+FIRMWARE_VERSION=$(getprop ro.product.ota.package_name | awk '{print substr($0,10,5)}')
 
 
 RM_RF() {
@@ -15,13 +16,17 @@ rm "${MODPATH}/README.md" 2>/dev/null
 }
 
 MOD_PRINT() {
+ui_print "--------------------------------------------------"
 ui_print "- FiiO Android Tweaker"
-ui_print "- Installing on $FIIO_MODEL"
+ui_print "- Installing on $FIIO_MODEL";
+ui_print "- FiiO firmware version $FIRMWARE_VERSION";
 ui_print "- Executed on $(date)"
+ui_print "--------------------------------------------------"
 }
 
 MOD_EXTRACT() {
-ui_print "- Extracting Module Files"
+ui_print ""
+ui_print "--------------------------------------------------"
 unzip -o "$ZIPFILE" FiiOat.sh -d "$MODPATH" >&2
 unzip -o "$ZIPFILE" service.sh -d "$MODPATH" >&2
 unzip -o "$ZIPFILE" module.prop -d "$MODPATH" >&2
@@ -37,19 +42,20 @@ set_parm_recursive "/sys/module/workqueue/parameters" 0 0 0755 0644
 
 ui_print "- Ready to begin real work"
 set -x
-ui_print "- Setting scripts as executable"
 MOD_PRINT
 RM_RF
 ui_print "- Old files removed"
 MOD_EXTRACT
 ui_print "- All files extracted"
 SET_PERMISSION
+ui_print "--------------------------------------------------"
 ui_print "- All permissions successfully set"
 ui_print "-"
 ui_print "- Script execution completed"
 ui_print "- FiiO Android Tweak module is installed"
 ui_print "- Please REBOOT/RESTART the Device to take effects"
 ui_print ""
+ui_print "--------------------------------------------------"
 ui_print "- WARNING:"
 ui_print "- While every effort has been made to assure your"
 ui_print "- device safety, use at your own risk."
