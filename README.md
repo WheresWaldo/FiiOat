@@ -5,7 +5,7 @@ A Magisk module to Tweak Kernel parameters, zswap size, and minimal debloater. T
 Since you have found this page you should already have a fundamental knowledge of how Magisk modules work. Other than a version of Magisk newer that v20.4 and a rooted FiiO device there are no other prerequisites. Since this module is a tweak and debloat combination, it is suggested that you do not run any other kernel tweak modules or debloating modules for Android at the same time.
 
 This module is a highly modified version of YAKT by NotZeetea(@github.com) [https://github.com/NotZeetaa/YAKT]. It is not a fork, but rather a standalone 'inspired by' port specifically to support FiiO Android DAPs and there idiosyncratic implementation of Android.
-Parts of this module have been sourced from other shell scripts, work done by MattClark18 (@Head-Fi.org) and others.
+Parts of this module have been sourced from other shell scripts, work done by MattClark18 (@Head-Fi.org), kuiporro (GitHub) and others.
 
 While this module is specifically designed for the FiiO M21/JM21 DAP it may work on other devices. Note that all the changes made by this module are available in the FiiO kernel (Android 13 devices) and may not be available in DAPs made by other manufacturers, in other word, it might or might not work on other DAPs!
 
@@ -48,7 +48,7 @@ No warranty as to servicablity of this module is either expressed or implied. Us
 - And that's it ;)
 
 
-## How to check logs:
+## How to verify installation:
 - Check fiioat.log text file in /data/adb/modules/fiioat/ folder
 - Check error.log text file in /data/adb/modules/fiioat/ folder
 - It should look like this (Not exactly ofc):

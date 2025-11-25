@@ -6,42 +6,45 @@ FIRMWARE_VERSION=$(getprop ro.product.version)
 
 
 RM_RF() {
-rm /sdcard/Documents/FiiOat/FiiOat.log 2>/dev/null
-rm /sdcard/FiiOat.log 2>/dev/null
-rm /sdcard/FiiOat/FiiOat.txt 2>/dev/null
-rm "${MODPATH}/FiiOat.log" 2>/dev/null
-rm "${MODPATH}/error.log" 2>/dev/null
-rm "${MODPATH}/LICENSE" 2>/dev/null
-rm "${MODPATH}/README.md" 2>/dev/null
+  rm /sdcard/Documents/FiiOat/FiiOat.log 2>/dev/null
+  rm /sdcard/FiiOat.log 2>/dev/null
+  rm /sdcard/FiiOat/FiiOat.txt 2>/dev/null
+  rm "${MODPATH}/FiiOat.log" 2>/dev/null
+  rm "${MODPATH}/error.log" 2>/dev/null
+  rm "${MODPATH}/LICENSE" 2>/dev/null
+  rm "${MODPATH}/README.md" 2>/dev/null
 }
 
 MOD_PRINT() {
-ui_print "--------------------------------------------------"
-ui_print "- FiiO Android Tweaker"
-ui_print "- Installing on $FIIO_MODEL";
-ui_print "- FiiO firmware version $FIRMWARE_VERSION";
-ui_print "- Executed on $(date)"
-ui_print "--------------------------------------------------"
+  ui_print "--------------------------------------------------"
+  ui_print "- FiiO Android Tweaker"
+  ui_print "- Installing on $FIIO_MODEL";
+  ui_print "- FiiO firmware version $FIRMWARE_VERSION";
+  ui_print "- Executed on $(date)"
+  ui_print "--------------------------------------------------"
 }
 
 MOD_EXTRACT() {
-ui_print ""
-ui_print "--------------------------------------------------"
-unzip -o "$ZIPFILE" FiiOat.sh -d "$MODPATH" >&2
-unzip -o "$ZIPFILE" service.sh -d "$MODPATH" >&2
-unzip -o "$ZIPFILE" module.prop -d "$MODPATH" >&2
+  ui_print ""
+  ui_print "--------------------------------------------------"
+  ui_print "- Extracting into $MODPATH"
+  unzip -o "$ZIPFILE" FiiOat.sh -d "$MODPATH" >&2
+  unzip -o "$ZIPFILE" service.sh -d "$MODPATH" >&2
+  unzip -o "$ZIPFILE" module.prop -d "$MODPATH" >&2
+  ui_print "- Extracting Files Complete"
 }
 
 SET_PERMISSION() {
-ui_print "- Setting Permissions"
-set_perm_recursive "$MODPATH" 0 0 0755 0644
-set_perm_recursive "${MODPATH}/FiiOat.sh" 0 0 0755 0700
-set_parm_recursive "/sys/devices/system/cpu/cpufreq" 0 0 0755 0644
-set_parm_recursive "/sys/module/workqueue/parameters" 0 0 0755 0644
+  ui_print "- Setting Permissions"
+  set_perm_recursive "$MODPATH" 0 0 0755 0644
+  ui_print "- Path permission set"
+  set_perm "${MODPATH}/FiiOat.sh" 0 0 0755 0700
+  set_perm "${MODPATH}/service.sh 0 0 0755 0700
+  set_parm "/sys/devices/system/cpu/cpufreq" 0 0 0755 0644
+  set_parm "/sys/module/workqueue/parameters" 0 0 0755 0644
+  ui_print "- Setting Permissions Complete"
 }
 
-ui_print "--------------------------------------------------"
-ui_print "- Ready to begin real work"
 set -x
 MOD_PRINT
 RM_RF
