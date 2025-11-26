@@ -1,6 +1,12 @@
 # FiiOat
-** FiiO Andriod Tweaker **. 
+** FiiO Android Tweaker **. 
 A Magisk module to Tweak Kernel parameters, zswap size, and minimal debloater. This module applies at boot.
+
+## Current Version: v17_r38 ✅ TESTED
+
+**Latest Release**: v17_r38 (2025-02-07)  
+**Status**: ✅ Tested and Stable  
+**Firmware Support**: Optimized for 1.0.8, compatible with previous versions
 
 Since you have found this page you should already have a fundamental knowledge of how Magisk modules work. Other than a version of Magisk newer that v20.4 and a rooted FiiO device there are no other prerequisites. Since this module is a tweak and debloat combination, it is suggested that you do not run any other kernel tweak modules or debloating modules for Android at the same time.
 
@@ -44,15 +50,46 @@ No warranty as to servicablity of this module is either expressed or implied. Us
 
 
 ## How to install:
-- Just flash in Magisk and reboot
-- And that's it ;)
+
+### Quick Install:
+1. Download the latest release from [Releases](https://github.com/kuiporro/FiiOat/releases)
+2. Flash in Magisk Manager
+3. Reboot
+
+### Build from Source:
+```bash
+git clone https://github.com/kuiporro/FiiOat.git
+cd FiiOat
+chmod +x build_module.sh
+./build_module.sh
+# Install the generated ZIP file via Magisk Manager
+```
+
+For detailed installation instructions, see [GUIA_INSTALACION_PRUEBA.md](GUIA_INSTALACION_PRUEBA.md) (Spanish) or [RESUMEN_RAPIDO.md](RESUMEN_RAPIDO.md) (Quick Reference)
 
 
 ## How to check logs:
-- Check fiioat.log text file in /data/adb/modules/fiioat/ folder
-- Check error.log text file in /data/adb/modules/fiioat/ folder
-- It should look like this (Not exactly ofc):
-<img width="261" height="475" alt="info log" src="https://github.com/user-attachments/assets/884eccbe-c7ca-435b-8b63-ca15f112f3b8" />
+- Check `info.log` text file in `/data/adb/modules/fiioat/` folder
+- Check `error.log` text file in `/data/adb/modules/fiioat/` folder
+
+### Via ADB:
+```bash
+adb shell
+su
+cat /data/adb/modules/fiioat/info.log
+cat /data/adb/modules/fiioat/error.log
+```
+
+## What's New in v17_r38:
+
+- ✅ **Firmware 1.0.8 Support**: Automatic detection and optimized tweaks
+- ✅ **Package Verification**: Helper functions prevent errors when packages don't exist
+- ✅ **Improved Logging**: Detailed logs showing what was processed and what was skipped
+- ✅ **Better Compatibility**: Works with different firmware versions gracefully
+- ✅ **Code Improvements**: Fixed typos, removed duplicate code, better error handling
+- ✅ **Documentation**: Comprehensive guides in Spanish and English
+
+See [RESULTADOS_PRUEBA.md](RESULTADOS_PRUEBA.md) for test results.
 
 ## How to Contribute:
 - Fork the Repo
