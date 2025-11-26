@@ -1,4 +1,4 @@
-# Release Creation Instructions for v17_r38
+# Release Creation Instructions for v17_r40
 
 ## Option 1: Using GitHub CLI (Recommended)
 
@@ -29,17 +29,17 @@ The script automatically:
 ## Option 2: Manually from GitHub Web
 
 1. **Go to releases page**:
-   https://github.com/kuiporro/FiiOat/releases/new
+   https://github.com/WheresWaldo/FiiOat/releases/new
 
 2. **Fill the form**:
-   - **Tag**: `v17_r38` (must match exactly)
+   - **Tag**: `v17_r40` (must match exactly)
    - **Target**: `main`
-   - **Release title**: `FiiOat v17_r38 - Stable Release`
-   - **Description**: Copy the complete content from `RELEASE_NOTES_v17_r38.md`
+   - **Release title**: `FiiOat v17_r40 - Stable Release`
+   - **Description**: Copy the complete content from `RELEASE_NOTES_current.md`
 
 3. **Attach file**:
    - Click "Attach binaries"
-   - Select: `FiiOat-v17_r38-main.zip`
+   - Select: `FiiOat_v17_r40.zip`
 
 4. **Publish**:
    - Make sure it's NOT marked as "Pre-release"
@@ -64,20 +64,20 @@ cd /path/to/FiiOat
 
 After creating the release, verify:
 
-1. **Release URL**: https://github.com/kuiporro/FiiOat/releases/tag/v17_r38
+1. **Release URL**: https://github.com/WheresWaldo/FiiOat/releases/tag/v17_r40
 2. **ZIP file**: Must be available for download
 3. **Notes**: Must display correctly formatted
 
 ## Release Content
 
-- **Tag**: v17_r38
-- **Title**: FiiOat v17_r38 - Stable Release
-- **File**: FiiOat-v17_r38-main.zip
-- **Notes**: Content from RELEASE_NOTES_v17_r38.md
+- **Tag**: v17_r40
+- **Title**: FiiOat v17_r40 - Stable Release
+- **File**: FiiOat_v17_r40.zip
+- **Notes**: Content from RELEASE_NOTES_current.md
 
 ## Important Notes
 
-- The tag `v17_r38` already exists in the repository (was created earlier)
+- The tag `v17_r40` already exists in the repository (was created earlier)
 - If GitHub asks if you want to use the existing tag, select "Use existing tag"
 - Make sure the release is marked as "Latest release" if it's the most recent version
 

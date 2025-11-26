@@ -9,19 +9,19 @@ All files are prepared and the repository is clean. Now create the release on Gi
 ### 1. Go to GitHub Releases
 Open in your browser:
 ```
-https://github.com/kuiporro/FiiOat/releases/new
+https://github.com/WheresWaldo/FiiOat/releases/new
 ```
 
 ### 2. Fill the Form
 
-- **Choose a tag**: Select `v17_r38` (it exists, select "Use existing tag")
-- **Release title**: `FiiOat v17_r38 - Stable Release`
-- **Description**: Copy the entire content from `RELEASE_NOTES_v17_r38.md` file
+- **Choose a tag**: Select `v17_r39` (it exists, select "Use existing tag")
+- **Release title**: `FiiOat v17_r39 - Stable Release`
+- **Description**: Copy the entire content from `RELEASE_NOTES_v17_r39.md` file
 
 ### 3. Attach the ZIP File
 
 - Click "Attach binaries by dropping them here or selecting them"
-- Select: `FiiOat-v17_r38-main.zip` (7.2K)
+- Select: `FiiOat_v17_r38.zip` (7.2K)
 - Wait for upload to complete
 
 ### 4. Publish
@@ -32,24 +32,15 @@ https://github.com/kuiporro/FiiOat/releases/new
 
 ## Files Ready
 
-- **ZIP**: `FiiOat-v17_r38-main.zip` (7.2K) - Ready to upload
-- **Notes**: `RELEASE_NOTES_v17_r38.md` - Copy content for description
+- **ZIP**: `FiiOat_v17_r38.zip` (7.2K) - Ready to upload
+- **Notes**: `RELEASE_NOTES_current.md` - Copy content for description
 - **Tag**: `v17_r38` - Already exists and updated
 
 ## After Creating Release
 
-1. Verify the release is visible at: https://github.com/kuiporro/FiiOat/releases
+1. Verify the release is visible at: https://github.com/WheresWaldo/FiiOat/releases
 2. Test downloading the ZIP
 3. Update README if needed (already done)
-
-## Repository Status
-
-- ✅ Main branch: Clean, English-only documentation
-- ✅ Tag v17_r38: Updated to latest commit
-- ✅ Old branch: Deleted (v17_r38-unstable)
-- ✅ Documentation: Only English files remain
-
----
 
 **That's it!** The release will be available for users to download.
 

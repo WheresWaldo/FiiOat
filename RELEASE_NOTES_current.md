@@ -1,27 +1,26 @@
-# FiiOat v17_r38 - Release Notes
+# FiiOat v17_r40 - Release Notes
 
 ## 🎉 Stable Release - Tested and Working
 
-**Release Date**: 2025-02-07  
-**Version**: v17_r38  
-**Status**: ✅ **STABLE AND TESTED**
+**Release Date**: 11-25-2025  
+**Version**: v17_r39  
+# **Status**: ✅ **STABLE AND TESTED**
 
 ---
 
 ## 📋 Summary
 
-This version includes significant improvements for firmware 1.0.8 compatibility and better system package handling. **Successfully tested on FiiO JM21**.
+This version includes improvements for JM21 firmware 1.0.8 compatibility and better system package handling for future M21/JM21 firmwares. **Successfully tested on FiiO JM21**.
 
 ## ✨ New Features
 
-### Firmware 1.0.8 Support
+### JM21 Firmware 1.0.8 Support
 - Automatic firmware 1.0.8 detection
-- Optimized specific tweaks for this version
 - Backward compatibility with previous versions
 
 ### Improved Helper Functions
 - **Package Verification**: Prevents errors when packages don't exist
-- **Package Cache**: Better performance on firmware 1.0.8
+- **Package Cache**: Better performance on firmware 1.0.8 and future firmware versions
 - **Detailed Logging**: Clear information about what is processed and what is skipped
 
 ### Code Improvements
@@ -32,7 +31,7 @@ This version includes significant improvements for firmware 1.0.8 compatibility 
 
 ## 🔧 Technical Changes
 
-### Applied Optimizations
+### Applied Optimizations (all versions)
 - ✅ CPU Schedutil Rate-Limits
 - ✅ Minimum CPU Frequencies (E-core and P-core at 300MHz)
 - ✅ Child Runs First (CRF)
@@ -54,28 +53,27 @@ This version includes significant improvements for firmware 1.0.8 compatibility 
 
 ## 🐛 Fixes
 
-- Fixed typo: "frrequency" → "frequency"
-- Fixed typo: "permisssions" → "permissions"
-- Fixed typo: "spotfy" → "spotify"
+- Fixed various typos
 - Removed duplicate wait for `sys.boot_completed`
 
 ## 📊 Test Results
 
 **Test Device**: FiiO JM21  
-**Firmware**: TKQ1.230110.001 (Android 13)  
+**Android Verion**: TKQ1.230110.001 (Android 13)
+**Firmware**: 1.0.8  
 **Kernel**: 5.15.41-android13-8-gdfab679e3463-dirty
 
 ### Results:
-- ✅ **Execution**: Complete without errors
-- ✅ **Error Log**: Empty (no errors)
-- ✅ **Optimizations**: All applied correctly
-- ✅ **Processed Packages**: 146 detected, 30+ disabled
-- ✅ **Compatibility**: Works on non-1.0.8 firmware as well
+- ✅ **Execution**: #Complete without errors
+- ✅ **Error Log**: #Empty (no errors)
+- ✅ **Optimizations**: #All applied correctly
+- ✅ **Processed Packages**: #146 detected, 30+ disabled
+- ✅ **Compatibility**: #Works on pre-1.0.8 firmware as well
 
 ## 📦 Installation
 
 ### Quick Method:
-1. Download `FiiOat-v17_r38-main.zip` from this release
+1. Download `FiiOat_v17_r40.zip` from this release
 2. Open Magisk Manager
 3. Go to Modules → Install from storage
 4. Select the downloaded ZIP
@@ -83,9 +81,9 @@ This version includes significant improvements for firmware 1.0.8 compatibility 
 
 ### From Source Code:
 ```bash
-git clone https://github.com/kuiporro/FiiOat.git
+git clone https://github.com/WheresWaldo/FiiOat.git
 cd FiiOat
-git checkout v17_r38
+git checkout v17_r40
 chmod +x build_module.sh
 ./build_module.sh
 ```
@@ -117,15 +115,16 @@ You should see "All optimizations completed" in `info.log` and no errors in `err
 
 ## 🙏 Credits
 
-- **Original Author**: @WheresWaldo (Github/Head-Fi)
+- **Original Author**: @WheresWaldo (GitHub/Head-Fi)
 - **Based on**: YAKT by NotZeetea
 - **Contributions**: MattClark18 and other Head-Fi.org members
+- Additional code provided by kuiporro (GitHub)
 
 ## 📝 Full Changelog
 
-### v17_r38 (2025-02-07)
-- ✅ Updated to v17_r38
-- ✅ Firmware 1.0.8 support
+### v17_r40 (2025-11-26)
+- ✅ Updated to v17_r40
+- ✅ JM21 Firmware 1.0.8 support
 - ✅ Helper functions for package verification
 - ✅ Installed packages list cache
 - ✅ Logging improvements
@@ -143,4 +142,4 @@ You should see "All optimizations completed" in `info.log` and no errors in `err
 
 **Thank you for using FiiOat!** 🎵
 
-To report issues or suggestions, open an Issue at: https://github.com/kuiporro/FiiOat/issues
+To report issues or suggestions, open an Issue at: https://github.com/WheresWaldo/FiiOat/issues

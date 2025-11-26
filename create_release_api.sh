@@ -1,49 +1,54 @@
 #!/bin/bash
-# Script alternativo usando la API de GitHub directamente
-# Requiere: curl y un token de GitHub
+# Script to create release page and upload files using GitHub API
+# Requirement: curl and a token for GitHub
+# Original code provided by kuiporro (GitHub)
+#
+# File must be incremented for every release
+# Release note file must be available at the time of uploading
 
 set -e
 
-VERSION="v17_r38"
-REPO="kuiporro/FiiOat"
-ZIP_FILE="FiiOat-v17_r38-main.zip"
-NOTES_FILE="RELEASE_NOTES_v17_r38.md"
+# Modify versioning for each release where required
+VERSION="v17_r39"
+REPO="WheresWaldo/FiiOat"
+ZIP_FILE="FiiOat_v17_r39.zip"
+NOTES_FILE="RELEASE_NOTES_current.md"
 
 echo "=========================================="
-echo "  Crear Release vía API de GitHub"
+echo "  Create Release via GitHub API"
 echo "=========================================="
 echo ""
 
-# Verificar token
+# Verify token
 if [ -z "$GITHUB_TOKEN" ]; then
-    echo "ERROR: GITHUB_TOKEN no está configurado"
+    echo "ERROR: GITHUB_TOKEN hasn't been configured"
     echo ""
-    echo "Para crear un token:"
-    echo "1. Ve a: https://github.com/settings/tokens"
-    echo "2. Genera un nuevo token con permisos 'repo'"
-    echo "3. Ejecuta: export GITHUB_TOKEN=tu_token"
-    echo "4. Vuelve a ejecutar este script"
+    echo "To create a token:"
+    echo "1. Go to: https://github.com/settings/tokens"
+    echo "2. Generate a new token with permissions 'repo'"
+    echo "3. Execute: export GITHUB_TOKEN=tu_token"
+    echo "4. Return to execute this script"
     exit 1
 fi
 
-# Verificar archivos
+# Verify archive
 if [ ! -f "$ZIP_FILE" ]; then
-    echo "ERROR: $ZIP_FILE no encontrado"
+    echo "ERROR: $ZIP_FILE not found"
     exit 1
 fi
 
 if [ ! -f "$NOTES_FILE" ]; then
-    echo "ERROR: $NOTES_FILE no encontrado"
+    echo "ERROR: $NOTES_FILE not found"
     exit 1
 fi
 
-# Leer notas
+# Read notes
 RELEASE_NOTES=$(cat "$NOTES_FILE" | jq -Rs .)
 
-echo "Creando release..."
+echo "Creating release..."
 echo ""
 
-# Crear el release
+# Create the release
 RELEASE_RESPONSE=$(curl -s -X POST \
     -H "Authorization: token $GITHUB_TOKEN" \
     -H "Accept: application/vnd.github.v3+json" \
@@ -57,16 +62,16 @@ RELEASE_RESPONSE=$(curl -s -X POST \
         \"prerelease\": false
     }")
 
-# Verificar respuesta
+# Verify response
 if echo "$RELEASE_RESPONSE" | grep -q "upload_url"; then
     UPLOAD_URL=$(echo "$RELEASE_RESPONSE" | jq -r .upload_url | sed 's/{?name,label}//')
     RELEASE_ID=$(echo "$RELEASE_RESPONSE" | jq -r .id)
     
-    echo "✓ Release creado (ID: $RELEASE_ID)"
+    echo "✓ Release created (ID: $RELEASE_ID)"
     echo ""
-    echo "Subiendo archivo..."
+    echo "Uploading archive..."
     
-    # Subir el ZIP
+    # Upload the ZIP
     UPLOAD_RESPONSE=$(curl -s -X POST \
         -H "Authorization: token $GITHUB_TOKEN" \
         -H "Accept: application/vnd.github.v3+json" \
@@ -75,18 +80,17 @@ if echo "$RELEASE_RESPONSE" | grep -q "upload_url"; then
         "$UPLOAD_URL?name=$ZIP_FILE")
     
     if echo "$UPLOAD_RESPONSE" | grep -q "browser_download_url"; then
-        echo "✅ Archivo subido exitosamente!"
+        echo "✅ Archive uploaded successfully!"
         echo ""
-        echo "Release disponible en:"
+        echo "Release available at:"
         echo "https://github.com/$REPO/releases/tag/$VERSION"
     else
-        echo "❌ Error al subir el archivo"
-        echo "Respuesta: $UPLOAD_RESPONSE"
+        echo "❌ Error uploading the archive"
+        echo "GitHub: $UPLOAD_RESPONSE"
         exit 1
     fi
 else
-    echo "❌ Error al crear el release"
-    echo "Respuesta: $RELEASE_RESPONSE"
+    echo "❌ Error creating the release"
+    echo "GitHub: $RELEASE_RESPONSE"
     exit 1
 fi
-

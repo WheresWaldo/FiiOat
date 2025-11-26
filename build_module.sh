@@ -1,13 +1,14 @@
 #!/bin/bash
-# Script para crear el ZIP del módulo FiiOat para Magisk
+# Script to create the FiiOat ZIP module for Magisk
+# Original code provided by kuiporro (GitHub)
 
 set -e
 
 MODULE_NAME="FiiOat"
 VERSION=$(grep "^version=" module.prop | cut -d'=' -f2)
-BRANCH=$(git branch --show-current 2>/dev/null || echo "unknown")
-ZIP_NAME="${MODULE_NAME}-${VERSION}-${BRANCH}.zip"
+ZIP_NAME="${MODULE_NAME}_${VERSION}.zip"
 
+echo ""
 echo "=========================================="
 echo "  Building FiiOat Module for Magisk"
 echo "=========================================="
@@ -17,13 +18,13 @@ echo "Branch: $BRANCH"
 echo "Output: $ZIP_NAME"
 echo ""
 
-# Limpiar ZIP anterior si existe
+# Clean up old ZIP if it exists
 if [ -f "$ZIP_NAME" ]; then
     echo "Removing old ZIP file..."
     rm "$ZIP_NAME"
 fi
 
-# Verificar que los archivos necesarios existan
+# Verify that the necessary files exist
 echo "Checking required files..."
 REQUIRED_FILES=(
     "META-INF/com/google/android/update-binary"
@@ -52,11 +53,12 @@ fi
 echo "All required files found!"
 echo ""
 
-# Crear el ZIP
-echo "Creating ZIP file..."
+# Create ZIP file
+echo -n "Creating ZIP file ";
 
-# Intentar usar zip, luego 7z, luego Python
+# Try using Zip, then 7-Zip, then Python3
 if command -v zip &> /dev/null; then
+    echo "using Zip..."
     zip -r "$ZIP_NAME" \
         META-INF/ \
         FiiOat.sh \
@@ -66,6 +68,7 @@ if command -v zip &> /dev/null; then
         > /dev/null
     ZIP_RESULT=$?
 elif command -v 7z &> /dev/null; then
+    echo "using 7-Zip..."
     7z a -tzip "$ZIP_NAME" \
         META-INF/ \
         FiiOat.sh \
@@ -75,6 +78,7 @@ elif command -v 7z &> /dev/null; then
         > /dev/null
     ZIP_RESULT=$?
 elif command -v python3 &> /dev/null; then
+    echo "using Python3..."
     python3 << 'PYTHON_SCRIPT'
 import zipfile
 import os
@@ -110,7 +114,7 @@ PYTHON_SCRIPT
     "$ZIP_NAME"
     ZIP_RESULT=$?
 else
-    echo "ERROR: No ZIP tool found (zip, 7z, or python3 required)"
+    echo "ERROR: No ZIP tool found (Zip, 7-Zip, or Python3 required)"
     exit 1
 fi
 
@@ -133,4 +137,3 @@ else
     echo "ERROR: Failed to create ZIP file"
     exit 1
 fi
-
