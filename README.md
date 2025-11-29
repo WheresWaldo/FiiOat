@@ -1,5 +1,5 @@
 # FiiOat
-** FiiO Andriod Tweaker **. 
+** FiiO Android Tweaker **. 
 A Magisk module to Tweak Kernel parameters, zswap size, and minimal debloater. This module applies at boot.
 
 Since you have found this page you should already have a fundamental knowledge of how Magisk modules work. Other than a version of Magisk newer that v20.4 and a rooted FiiO device there are no other prerequisites. Since this module is a tweak and debloat combination, it is suggested that you do not run any other kernel tweak modules or debloating modules for Android at the same time.
@@ -44,15 +44,38 @@ No warranty as to servicablity of this module is either expressed or implied. Us
 
 
 ## How to install:
-- Just flash in Magisk and reboot
-- And that's it ;)
+
+### Quick Install:
+1. Download the latest release from [Releases](https://github.com/WheresWaldo/FiiOat/releases)
+2. Flash in Magisk Manager
+3. Reboot
+
+### Build from Source:
+```bash
+git clone https://github.com/WheresWaldo/FiiOat.git
+cd FiiOat
+chmod +x build_module.sh
+./build_module.sh
+# Install the generated ZIP file via Magisk Manager
+```
+
+For detailed installation instructions, see [CREATE_RELEASE_NOW.md](CREATE_RELEASE_NOW.md) (Quick Reference)
 
 
-## How to verify installation:
-- Check fiioat.log text file in /data/adb/modules/fiioat/ folder
-- Check error.log text file in /data/adb/modules/fiioat/ folder
-- It should look like this (Not exactly ofc):
-<img width="261" height="475" alt="info log" src="https://github.com/user-attachments/assets/884eccbe-c7ca-435b-8b63-ca15f112f3b8" />
+## How to check logs:
+- Check `info.log` text file in `/data/adb/modules/fiioat/` folder
+- Check `error.log` text file in `/data/adb/modules/fiioat/` folder
+
+### Via ADB:
+```bash
+adb shell
+su
+cat /data/adb/modules/fiioat/info.log
+cat /data/adb/modules/fiioat/error.log
+```
+
+## What's New in the latest release:
+- Check release notes accompanying module release
 
 ## How to Contribute:
 - Fork the Repo

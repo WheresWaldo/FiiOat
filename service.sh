@@ -1,4 +1,9 @@
 #!/system/bin/sh
+# Author: @WheresWaldo (Github)
+# ×××××××××××××××××××××××××××××××××××× #
+
+# Module parent directory
 MODDIR=${0%/*}
 
-"${MODDIR}/FiiOat.sh" > /dev/null
+# Load FiiO Android Tweaker
+"${MODDIR}/FiiOat.sh" >/dev/null

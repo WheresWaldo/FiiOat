@@ -19,8 +19,6 @@ This version includes improvements for JM21 firmware 1.0.8 compatibility and bet
 - Backward compatibility with previous versions
 
 ### Improved Helper Functions
-- **Package Verification**: Prevents errors when packages don't exist
-- **Package Cache**: Better performance on firmware 1.0.8
 - **Detailed Logging**: Clear information about what is processed and what is skipped
 
 ### Code Improvements
@@ -68,7 +66,6 @@ This version includes improvements for JM21 firmware 1.0.8 compatibility and bet
 - ✅ **Error Log**: #Empty (no errors)
 - ✅ **Optimizations**: #All applied correctly
 - ✅ **Processed Packages**: #146 detected, 30+ disabled
-- ✅ **Compatibility**: #Works on non-1.0.8 firmware as well
 
 ## 📦 Installation
 
@@ -81,7 +78,7 @@ This version includes improvements for JM21 firmware 1.0.8 compatibility and bet
 
 ### From Source Code:
 ```bash
-git clone https://github.com/WheresWlado/FiiOat.git
+git clone https://github.com/WheresWaldo/FiiOat.git
 cd FiiOat
 git checkout release
 chmod +x build_module.sh
@@ -122,9 +119,8 @@ You should see "All optimizations completed" in `info.log` and no errors in `err
 
 ## 📝 Full Changelog
 
-### v17_r39 (2025-11-25)
+### v17_r39 (2025-11-28)
 - ✅ Updated to v17_r39
-- ✅ Firmware 1.0.8 support
 - ✅ Helper functions for package verification
 - ✅ Installed packages list cache
 - ✅ Logging improvements

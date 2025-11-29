@@ -6,9 +6,9 @@
 set -e
 
 # Modify versioning for each release where required
-VERSION="v17_r38"
+VERSION="v17_r39"
 REPO="WheresWaldo/FiiOat"
-ZIP_FILE="FiiOat_v17_r38.zip"
+ZIP_FILE="FiiOat_v17_r39.zip"
 NOTES_FILE="RELEASE_NOTES_current.md"
 
 echo "=========================================="
