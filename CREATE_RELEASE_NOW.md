@@ -1,4 +1,4 @@
-# Create Release v17_r38 - Final Steps
+# Create Release v17_r40 - Final Steps
 
 ## ✅ Everything is Ready!
 
@@ -14,14 +14,14 @@ https://github.com/WheresWaldo/FiiOat/releases/new
 
 ### 2. Fill the Form
 
-- **Choose a tag**: Select `v17_r39` (it exists, select "Use existing tag")
-- **Release title**: `FiiOat v17_r39 - Stable Release`
-- **Description**: Copy the entire content from `RELEASE_NOTES_v17_r39.md` file
+- **Choose a tag**: Select `v17_r40` (it exists, select "Use existing tag")
+- **Release title**: `FiiOat v17_r40 - Stable Release`
+- **Description**: Copy the entire content from `RELEASE_NOTES_current.md` file
 
 ### 3. Attach the ZIP File
 
 - Click "Attach binaries by dropping them here or selecting them"
-- Select: `FiiOat_v17_r38.zip` (7.2K)
+- Select: `FiiOat_v17_r40.zip` (7.2K)
 - Wait for upload to complete
 
 ### 4. Publish
@@ -32,9 +32,9 @@ https://github.com/WheresWaldo/FiiOat/releases/new
 
 ## Files Ready
 
-- **ZIP**: `FiiOat_v17_r38.zip` (7.2K) - Ready to upload
+- **ZIP**: `FiiOat_v17_r40.zip` (7.2K) - Ready to upload
 - **Notes**: `RELEASE_NOTES_current.md` - Copy content for description
-- **Tag**: `v17_r38` - Already exists and updated
+- **Tag**: `v17_r40` - Already exists and updated
 
 ## After Creating Release
 
