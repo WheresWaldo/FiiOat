@@ -59,7 +59,7 @@ echo -n "Creating ZIP file ";
 # Try using Zip, then 7-Zip, then Python3
 if command -v zip &> /dev/null; then
     echo "using Zip..."
-    zip -r "$ZIP_NAME" \
+	zip -r "$ZIP_NAME" \
         META-INF/ \
         FiiOat.sh \
         service.sh \
@@ -69,7 +69,7 @@ if command -v zip &> /dev/null; then
     ZIP_RESULT=$?
 elif command -v 7z &> /dev/null; then
     echo "using 7-Zip..."
-    7z a -tzip "$ZIP_NAME" \
+	7z a -tzip "$ZIP_NAME" \
         META-INF/ \
         FiiOat.sh \
         service.sh \
@@ -79,7 +79,7 @@ elif command -v 7z &> /dev/null; then
     ZIP_RESULT=$?
 elif command -v python3 &> /dev/null; then
     echo "using Python3..."
-    python3 << 'PYTHON_SCRIPT'
+	python3 << 'PYTHON_SCRIPT'
 import zipfile
 import os
 import sys

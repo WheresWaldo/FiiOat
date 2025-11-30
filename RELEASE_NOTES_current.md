@@ -1,26 +1,26 @@
-# FiiOat v17_r40 - Release Notes
+# FiiOat v17_r39 - Release Notes
 
 ## 🎉 Stable Release - Tested and Working
 
-**Release Date**: 11-25-2025  
-**Version**: v17_r39  
+**Release Date**: 11-30-2025  
+**Version**: v17_r40  
 # **Status**: ✅ **STABLE AND TESTED**
 
 ---
 
 ## 📋 Summary
 
-This version includes improvements for JM21 firmware 1.0.8 compatibility and better system package handling for future M21/JM21 firmwares. **Successfully tested on FiiO JM21**.
+This version includes improvements for future firmware compatibility and better system package handling.
+Tested as new install and overwriting existing pervious install on JM21 v1.0.8.
 
 ## ✨ New Features
 
-### JM21 Firmware 1.0.8 Support
-- Automatic firmware 1.0.8 detection
+### New firmware support
+- Automatic firmware detection
+- Current firmware version logged 
 - Backward compatibility with previous versions
 
 ### Improved Helper Functions
-- **Package Verification**: Prevents errors when packages don't exist
-- **Package Cache**: Better performance on firmware 1.0.8 and future firmware versions
 - **Detailed Logging**: Clear information about what is processed and what is skipped
 
 ### Code Improvements
@@ -54,7 +54,7 @@ This version includes improvements for JM21 firmware 1.0.8 compatibility and bet
 ## 🐛 Fixes
 
 - Fixed various typos
-- Removed duplicate wait for `sys.boot_completed`
+- Moved wait for `sys.boot_completed` to service.sh
 
 ## 📊 Test Results
 
@@ -67,8 +67,7 @@ This version includes improvements for JM21 firmware 1.0.8 compatibility and bet
 - ✅ **Execution**: #Complete without errors
 - ✅ **Error Log**: #Empty (no errors)
 - ✅ **Optimizations**: #All applied correctly
-- ✅ **Processed Packages**: #146 detected, 30+ disabled
-- ✅ **Compatibility**: #Works on pre-1.0.8 firmware as well
+- ✅ **Processed Packages**: #143 detected, 30+ disabled
 
 ## 📦 Installation
 
@@ -77,13 +76,13 @@ This version includes improvements for JM21 firmware 1.0.8 compatibility and bet
 2. Open Magisk Manager
 3. Go to Modules → Install from storage
 4. Select the downloaded ZIP
-5. Reboot device
+5. Reboot device when prompted
 
 ### From Source Code:
 ```bash
 git clone https://github.com/WheresWaldo/FiiOat.git
 cd FiiOat
-git checkout v17_r40
+git checkout release
 chmod +x build_module.sh
 ./build_module.sh
 ```
@@ -118,13 +117,12 @@ You should see "All optimizations completed" in `info.log` and no errors in `err
 - **Original Author**: @WheresWaldo (GitHub/Head-Fi)
 - **Based on**: YAKT by NotZeetea
 - **Contributions**: MattClark18 and other Head-Fi.org members
-- Additional code provided by kuiporro (GitHub)
+- **Additional code**: kuiporro (GitHub)
 
 ## 📝 Full Changelog
 
-### v17_r40 (2025-11-26)
+### v17_r40 (2025-11-30)
 - ✅ Updated to v17_r40
-- ✅ JM21 Firmware 1.0.8 support
 - ✅ Helper functions for package verification
 - ✅ Installed packages list cache
 - ✅ Logging improvements
@@ -133,7 +131,7 @@ You should see "All optimizations completed" in `info.log` and no errors in `err
 - ✅ Automated build script
 
 ### Compared to v17_r37:
-- Better compatibility with different firmware versions
+- Better compatibility with all firmware versions
 - Fewer errors when packages don't exist
 - More detailed and useful logging
 - More maintainable code

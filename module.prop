@@ -1,6 +1,6 @@
 id=fiioat
 name=FiiO Android Tweaker
-version=v17_r39
-versionCode=3
+version=v17_r40
+versionCode=4
 author=WheresWaldo @(GitHub|Head-Fi)
 description=This module tweaks your FiiO Android DAP, for better memory management and application performance. Removes zswap, adjusts scheduler, debloats, all in one script.
