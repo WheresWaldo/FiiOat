@@ -5,15 +5,11 @@ FIIO_MODEL=$(getprop ro.product.model)
 FIRMWARE_VERSION=$(getprop ro.product.version)
 
 MOD_PRINT() {
-  ui_print "**************************************************"
-  ui_print "-"
   ui_print "- FiiO Android Tweaker"
   ui_print "- Installing on $FIIO_MODEL" 
   ui_print "- Firmware $FIRMWARE_VERSION"
-  ui_print "- Executed on $(date)"
+  ui_print "- Executed on $(date +'%m-%d-%Y')"
   ui_print "- Installed in $MODPATH"
-  ui_print "-"
-  ui_print "**************************************************"
 }
 
 RM_RF() {
@@ -53,7 +49,12 @@ SET_PERMISSION() {
 }
 
 ui_print "-"
+ui_print "**************************************************"
+ui_print "-"
 MOD_PRINT
+ui_print "-"
+ui_print "**************************************************"
+ui_print "-"
 RM_RF
 MOD_EXTRACT
 SET_PERMISSION
