@@ -13,7 +13,7 @@ ERROR_LOG="${MODDIR}/error.log"
 :> "$INFO_LOG"
 :> "$ERROR_LOG"
 
-RELEASE="r40"
+RELEASE="r41"
 
 # Function to append a message to the specified log file
 log_message() {
@@ -79,7 +79,7 @@ INSTALLED_PACKAGES="$(pm list packages 2>/dev/null)"
 
 # Log starting information
 log_info "Starting FiiOat $RELEASE"
-log_info "Build Date: 11-30-2025"
+log_info "Build Date: 12-23-2025"
 log_info "Installed: $(date +'%m-%d-%Y')"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $FIIO_MODEL"
@@ -289,6 +289,7 @@ whitelist_pkg() {
 # disable_pkg "<package name>"
 log_info "Disabling selected applications..."
 disable_pkg "com.alex.debugtool_player"
+disable_pkg "com.android.adservices.api"
 disable_pkg "com.android.carrierconfig"
 disable_pkg "com.android.carrierconfig.overlay.common"
 disable_pkg "com.android.cellbroadcastreceiver.module"
@@ -330,6 +331,7 @@ log_info "Done."
 # force_stop_pkg "<package_name>"
 log_info "Stopping secondary applications..."
 force_stop_pkg "com.android.aboutfiio"
+force_stop_pkg "com.android.vending"
 force_stop_pkg "com.fiio.devicevendor"
 force_stop_pkg "com.fiio.entersleep"
 force_stop_pkg "com.fiio.market"
@@ -395,6 +397,7 @@ whitelist_pkg "com.apple.android.music.classical"
 whitelist_pkg "com.aspiro.tidal"
 whitelist_pkg "com.bandcamp.android"
 whitelist_pkg "com.cca.app_noble"
+whitelist_pkg "com.pittvandewitt.wavelet"
 whitelist_pkg "com.extreamsd.usbaudioplayerpro"
 whitelist_pkg "com.fiio.android"
 whitelist_pkg "com.fiio.entersleep"
@@ -417,6 +420,38 @@ whitelist_pkg "com.soundcloud.android"
 whitelist_pkg "com.spotify.music"
 whitelist_pkg "com.topjohnwu.magisk"
 log_info "Done."
+
+# Wavelet 'Enhanced session detection' support
+PACKAGE_NAME="com.pittvandewitt.wavelet"
+PERMISSIONS=(
+	"android.permission.DUMP"
+	"android.permission.ACCESS_RESTRICTED_SETTINGS"
+	"android.permission.POST_NOTIFICATIONS"
+)
+
+# Function to check/set single permission
+check_permission() {
+	local perm="$1"
+	# Use Dumpsys to check if the permission is granted
+	if dumpsys package "$PACKAGE_NAME" | grep -q "grantedPermission:.*$perm"; then
+		log_info "$perm already granted"
+	else
+		pm grant "$PACKAGE_NAME" "$perm"
+		log_info "Setting $perm..."
+	fi
+}
+		
+# Check to see if Wavelet is installed
+# and step through the necessary permissions
+if pm list packages | grep -q "$PACKAGE_NAME"; then
+	for perm in "${PERMISSIONS[@]}"; do
+		check_permission "$perm"
+	done
+	cmd notification allow_listener com.pittvandewitt.wavelet/com.pittvandewitt.wavelet.session.SessionListenerService
+	log_info "Wavelet Enhanced session detection installed."
+	else	
+		log_info "$PACKAGE_NAME not installed."
+fi
 
 # And -- We're done!
 # Since we waited for boot_complete there is a delay
