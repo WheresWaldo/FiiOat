@@ -29,6 +29,7 @@ No warranty as to servicablity of this module is either expressed or implied. Us
 - Window animations
 - Blur effects
 - Provides smooth and balanced running of Music apps
+- Adds properties for Wavelet Enhanced Audio Detection
 
 
 ## What the module doesn't:
@@ -41,6 +42,7 @@ No warranty as to servicablity of this module is either expressed or implied. Us
 
 ## Notes:
 - This is not a perfomance/gaming module!
+- This is not a sound shaping module!
 
 
 ## How to install:
