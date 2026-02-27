@@ -1,9 +1,9 @@
-# FiiOat v17_r41 - Release Notes
+# FiiOat v17_r42.02 - Release Notes
 
 ## 🎉 Stable Release - Tested and Working
 
-**Release Date**: 12-23-2025  
-**Version**: v17_r41  
+**Release Date**: 02-26-2026  
+**Version**: v17_r43  
 # **Status**: ✅ **STABLE AND TESTED**
 
 ---
@@ -11,7 +11,6 @@
 ## 📋 Summary
 
 This version includes improvements for future firmware compatibility and better system package handling.
-Tested as new install and overwriting existing pervious install on JM21 v1.1.0 and M21 v1.0.7.
 
 ## ✨ New Features
 
@@ -44,8 +43,9 @@ Tested as new install and overwriting existing pervious install on JM21 v1.1.0 a
 - ✅ Background Apps Control
 - ✅ Music Apps Whitelist
 - ✅ Wavelet Enhanced session detection support
+- ✅ Scrobbling support if Pano Scrobbler is installed 
 
-### New Functions
+### Functions
 - `package_exists()` - Checks if a package is installed
 - `disable_pkg()` - Disables packages only if they exist
 - `force_stop_pkg()` - Stops packages only if they exist
@@ -53,9 +53,7 @@ Tested as new install and overwriting existing pervious install on JM21 v1.1.0 a
 - `whitelist_pkg()` - Adds to whitelist only if package exists
 
 ## 🐛 Fixes
-
-- Fixed various typos
-- Moved wait for `sys.boot_completed` to service.sh
+- None in this revision
 
 ## 📊 Test Environment #1
 
@@ -86,7 +84,7 @@ Tested as new install and overwriting existing pervious install on JM21 v1.1.0 a
 ## 📦 Installation
 
 ### Quick Method:
-1. Download `FiiOat_v17_r41.zip` from this release
+1. Download `FiiOat_v17_r43.zip` from this release
 2. Open Magisk Manager
 3. Go to Modules → Install from storage
 4. Select the downloaded ZIP
@@ -135,16 +133,8 @@ You should see "All optimizations completed" in `info.log` and no errors in `err
 
 ## 📝 Full Changelog
 
-### v17_r41 (2025-12-23)
-- Added support for Wavelet. (Please note that Wavelet AutoEQ and headphone
-  detection does not function as intended. Neither FiiO nor FiiO Android Tweaker
-  can resolve these specific issues with Wavelet app.) 
-
-### Compared to v17_r37:
-- Better compatibility with all firmware versions
-- Fewer errors when packages don't exist
-- More detailed and useful logging
-- More maintainable code
+### v17_r43 (2026-02-26)
+- Added support for Max MP Poweramp. 
 
 ---
 
