@@ -1,9 +1,9 @@
-# FiiOat v17_r42.02 - Release Notes
+# FiiOat v17_r44.02 - Release Notes
 
 ## 🎉 Stable Release - Tested and Working
 
-**Release Date**: 02-26-2026  
-**Version**: v17_r43  
+**Release Date**: 05-01-2026  
+**Version**: v17_r44  
 # **Status**: ✅ **STABLE AND TESTED**
 
 ---
@@ -17,7 +17,7 @@ This version includes improvements for future firmware compatibility and better 
 ### New firmware support
 - Automatic firmware detection
 - Current firmware version logged 
-- Backward compatibility with previous versions
+- Backward compatibility with all previous firmware versions
 
 ### Improved Helper Functions
 - **Detailed Logging**: Clear information about what is processed and what is skipped
@@ -59,32 +59,32 @@ This version includes improvements for future firmware compatibility and better 
 
 **Test Device**: FiiO JM21  
 **Android Verion**: TKQ1.230110.001 (Android 13)
-**Firmware**: 1.1.0  
-**Kernel**: 5.15.41-android13-8-gd319db77ec17-dirty
+**Firmware**: 1.1.1  
+**Kernel**: 5.15.41-android13-8-g9ded8564ff52-dirty
 
 ### Results Environment #1
 - ✅ **Execution**: #Complete without errors
 - ✅ **Error Log**: #Empty (no errors)
 - ✅ **Optimizations**: #All applied correctly
-- ✅ **Processed Packages**: #142 detected, 31 disabled
+- ✅ **Processed Packages**: #150 detected, 31 disabled
 
 ## 📊 Test Environment #2
 
 **Test Device**: FiiO M21  
 **Android Verion**: TKQ1.230110.001 (Android 13)
-**Firmware**: 1.0.7  
-**Kernel**: 5.15.41-android13-8-gd319db77ec17-dirty
+**Firmware**: 1.0.8 
+**Kernel**: 5.15.41-android13-8-g9ded8564ff52-dirty
 
 ### Results Environment #2
 - ✅ **Execution**: #Complete without errors
 - ✅ **Error Log**: #Empty (no errors)
 - ✅ **Optimizations**: #All applied correctly
-- ✅ **Processed Packages**: #146 detected, 31 disabled
+- ✅ **Processed Packages**: #148 detected, 31 disabled
 
 ## 📦 Installation
 
 ### Quick Method:
-1. Download `FiiOat_v17_r43.zip` from this release
+1. Download `FiiOat_v17_r44.zip` from this release
 2. Open Magisk Manager
 3. Go to Modules → Install from storage
 4. Select the downloaded ZIP
@@ -133,8 +133,10 @@ You should see "All optimizations completed" in `info.log` and no errors in `err
 
 ## 📝 Full Changelog
 
-### v17_r43 (2026-02-26)
-- Added support for Max MP Poweramp. 
+### v17_r44 (2026-05-01)
+- Added support for FiiO iPod application.
+- support for firmware 1.1.1 (JM21)
+- Support for firmware 1.0.8
 
 ---
 
