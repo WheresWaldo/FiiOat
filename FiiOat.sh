@@ -13,7 +13,7 @@ ERROR_LOG="${MODDIR}/error.log"
 :> "$INFO_LOG"
 :> "$ERROR_LOG"
 
-RELEASE="r44"
+RELEASE="r45"
 
 # Function to append a message to the specified log file
 log_message() {
@@ -465,7 +465,7 @@ if pm list packages | grep -q "$PACKAGE_NAME"; then
 fi
 
 # Pano-scrobbler notification support if Installed
-PACKAGE_NAME="com.arn.scrobbler"
+PACKAGE_NAME="com.arn.scrobble"
 PERMISSIONS=(
 	"android.permission.BIND_ACCESSIBILITY_SERVICE"
 	"android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
@@ -477,7 +477,7 @@ if pm list packages | grep -q "$PACKAGE_NAME"; then
 	for perm in "${PERMISSIONS[@]}"; do
 		check_permission "$perm"
 	done
-	cmd notification allow_listener com.arn.scrobbler/com.arn.scrobbler.session.SessionListenerService
+	cmd notification allow_listener com.arn.scrobble/com.arn.scrobble.session.SessionListenerService
 	log_info "Pano-scrobbler notification access granted"
 	else
 		log_info "$PACKAGE_NAME not installed."

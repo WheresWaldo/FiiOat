@@ -1,9 +1,9 @@
-# FiiOat v17_r44.02 - Release Notes
+# FiiOat v17_r45.01 - Release Notes
 
 ## 🎉 Stable Release - Tested and Working
 
-**Release Date**: 05-01-2026  
-**Version**: v17_r44  
+**Release Date**: 05-02-2026  
+**Version**: v17_r45  
 # **Status**: ✅ **STABLE AND TESTED**
 
 ---
@@ -84,7 +84,7 @@ This version includes improvements for future firmware compatibility and better 
 ## 📦 Installation
 
 ### Quick Method:
-1. Download `FiiOat_v17_r44.zip` from this release
+1. Download `FiiOat_v17_r45.zip` from this release
 2. Open Magisk Manager
 3. Go to Modules → Install from storage
 4. Select the downloaded ZIP
@@ -137,6 +137,7 @@ You should see "All optimizations completed" in `info.log` and no errors in `err
 - Added support for FiiO iPod application.
 - support for firmware 1.1.1 (JM21)
 - Support for firmware 1.0.8
+- Fixed typos
 
 ---
 
