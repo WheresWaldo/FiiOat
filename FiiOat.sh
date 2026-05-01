@@ -13,7 +13,7 @@ ERROR_LOG="${MODDIR}/error.log"
 :> "$INFO_LOG"
 :> "$ERROR_LOG"
 
-RELEASE="r41"
+RELEASE="r44"
 
 # Function to append a message to the specified log file
 log_message() {
@@ -79,7 +79,7 @@ INSTALLED_PACKAGES="$(pm list packages 2>/dev/null)"
 
 # Log starting information
 log_info "Starting FiiOat $RELEASE"
-log_info "Build Date: 12-23-2025"
+log_info "Build Date: 05-01-2026"
 log_info "Installed: $(date +'%m-%d-%Y')"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $FIIO_MODEL"
@@ -231,9 +231,13 @@ settings put global animator_duration_scale 0
 settings put global transition_animation_scale 0
 settings put global window_animation_scale 0
 log_info "Android system animations disabled"
+settings put global bug_report 0    
 settings put secure send_action_app_error 0
 settings put system send_security_reports 0
 log_info "Android system reporting disabled"
+settings put global cell_on 0
+settings put global cdma_cell_broadcast_sms 0
+log_info "Cell activity disabled"
 log_info "All optimizations completed."
 
 # Log final total swap size
@@ -308,6 +312,8 @@ disable_pkg "com.android.internal.display.cutout.emulation.waterfall"
 disable_pkg "com.android.internal.systemui.navbar.twobutton"
 disable_pkg "com.android.managedprovisioning"
 disable_pkg "com.android.providers.blockednumber"
+disable_pkg "com.android.providers.partnerbookmarks"
+disable_pkg "com.android.providers.userdictionary"
 disable_pkg "com.android.traceur"
 disable_pkg "com.example.fiiotestappliction"
 disable_pkg "com.fiio.market"
@@ -334,6 +340,7 @@ force_stop_pkg "com.android.aboutfiio"
 force_stop_pkg "com.android.vending"
 force_stop_pkg "com.fiio.devicevendor"
 force_stop_pkg "com.fiio.entersleep"
+force_stop_pkg "com.fiio.ipod"
 force_stop_pkg "com.fiio.market"
 force_stop_pkg "com.fiio.scrcpy"
 force_stop_pkg "com.fiio.tape"
@@ -345,6 +352,7 @@ log_info "Setting background process permisssions..."
 set_appops_background "android"
 set_appops_background "android.ext.services"
 set_appops_background "android.ext.shared"
+set_appops_background "app.symfonik.music.player"
 set_appops_background "com.amazon.mp3"
 set_appops_background "com.android.certinstaller"
 set_appops_background "com.android.chrome"
@@ -367,9 +375,11 @@ set_appops_background "com.android.systemui"
 set_appops_background "com.android.vending"
 set_appops_background "com.android.wifi.resources"
 set_appops_background "com.apple.android.music"
+set_appops_background "com.arn.scrobble"
 set_appops_background "com.aspiro.tidal"
 set_appops_background "com.fiio.devicevendor"
 set_appops_background "com.fiio.entersleep"
+set_appops_background "com.fiio.ipod"
 set_appops_background "com.fiio.fiioeq"
 set_appops_background "com.fiio.scrcpy"
 set_appops_background "com.fiio.tape"
@@ -387,13 +397,15 @@ log_info "Done."
 
 # Set Music Apps to use unrestricted mode when DAP on Battery power
 # whitelist_pkg "<package_name>"
-log_info "Whitelisting common music applications..."
+log_info "Whitelisting common music and supporting applications..."
+whitelist_pkg "app.symfonik.music.player"
 whitelist_pkg "com.amazon.mp3"
 whitelist_pkg "com.android.fiio.scrcpy"
 whitelist_pkg "com.android.fiioroon"
 whitelist_pkg "com.android.fiioupdate"
 whitelist_pkg "com.apple.android.music"
 whitelist_pkg "com.apple.android.music.classical"
+whitelist_pkg "com.arn.scrobble"
 whitelist_pkg "com.aspiro.tidal"
 whitelist_pkg "com.bandcamp.android"
 whitelist_pkg "com.cca.app_noble"
@@ -402,6 +414,7 @@ whitelist_pkg "com.extreamsd.usbaudioplayerpro"
 whitelist_pkg "com.fiio.android"
 whitelist_pkg "com.fiio.entersleep"
 whitelist_pkg "com.fiio.fiioeq"
+whitelist_pkg "com.fiio.ipod"
 whitelist_pkg "com.fiio.music"
 whitelist_pkg "com.fiio.scrcpy"
 whitelist_pkg "com.fiio.tape"
@@ -411,6 +424,7 @@ whitelist_pkg "com.google.android.youtube"
 whitelist_pkg "com.hiby.music"
 whitelist_pkg "com.hiby.music.n6"
 whitelist_pkg "com.hiby.roon.cayin"
+whitelist_pkg "com.maxmpz.audioplayer"
 whitelist_pkg "com.neutroncode.mp"
 whitelist_pkg "com.pandora.android"
 whitelist_pkg "com.qobuz.music"
@@ -420,14 +434,6 @@ whitelist_pkg "com.soundcloud.android"
 whitelist_pkg "com.spotify.music"
 whitelist_pkg "com.topjohnwu.magisk"
 log_info "Done."
-
-# Wavelet 'Enhanced session detection' support
-PACKAGE_NAME="com.pittvandewitt.wavelet"
-PERMISSIONS=(
-	"android.permission.DUMP"
-	"android.permission.ACCESS_RESTRICTED_SETTINGS"
-	"android.permission.POST_NOTIFICATIONS"
-)
 
 # Function to check/set single permission
 check_permission() {
@@ -441,8 +447,13 @@ check_permission() {
 	fi
 }
 		
-# Check to see if Wavelet is installed
-# and step through the necessary permissions
+# Wavelet 'Enhanced session detection' support if installed
+PACKAGE_NAME="com.pittvandewitt.wavelet"
+PERMISSIONS=(
+	"android.permission.DUMP"
+	"android.permission.ACCESS_RESTRICTED_SETTINGS"
+	"android.permission.POST_NOTIFICATIONS"
+)
 if pm list packages | grep -q "$PACKAGE_NAME"; then
 	for perm in "${PERMISSIONS[@]}"; do
 		check_permission "$perm"
@@ -450,6 +461,25 @@ if pm list packages | grep -q "$PACKAGE_NAME"; then
 	cmd notification allow_listener com.pittvandewitt.wavelet/com.pittvandewitt.wavelet.session.SessionListenerService
 	log_info "Wavelet Enhanced session detection installed."
 	else	
+		log_info "$PACKAGE_NAME not installed."
+fi
+
+# Pano-scrobbler notification support if Installed
+PACKAGE_NAME="com.arn.scrobbler"
+PERMISSIONS=(
+	"android.permission.BIND_ACCESSIBILITY_SERVICE"
+	"android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+	"android.permission.POST_NOTIFICATIONS"
+	"android.permission.BIND_REMOTEVIEWS"
+	"android.permission.BIND_QUICK_SETTINGS_TILE"
+)
+if pm list packages | grep -q "$PACKAGE_NAME"; then
+	for perm in "${PERMISSIONS[@]}"; do
+		check_permission "$perm"
+	done
+	cmd notification allow_listener com.arn.scrobbler/com.arn.scrobbler.session.SessionListenerService
+	log_info "Pano-scrobbler notification access granted"
+	else
 		log_info "$PACKAGE_NAME not installed."
 fi
 

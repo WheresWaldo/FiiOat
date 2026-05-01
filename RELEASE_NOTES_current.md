@@ -1,9 +1,9 @@
-# FiiOat v17_r41 - Release Notes
+# FiiOat v17_r44.02 - Release Notes
 
 ## 🎉 Stable Release - Tested and Working
 
-**Release Date**: 12-23-2025  
-**Version**: v17_r41  
+**Release Date**: 05-01-2026  
+**Version**: v17_r44  
 # **Status**: ✅ **STABLE AND TESTED**
 
 ---
@@ -11,14 +11,13 @@
 ## 📋 Summary
 
 This version includes improvements for future firmware compatibility and better system package handling.
-Tested as new install and overwriting existing pervious install on JM21 v1.1.0 and M21 v1.0.7.
 
 ## ✨ New Features
 
 ### New firmware support
 - Automatic firmware detection
 - Current firmware version logged 
-- Backward compatibility with previous versions
+- Backward compatibility with all previous firmware versions
 
 ### Improved Helper Functions
 - **Detailed Logging**: Clear information about what is processed and what is skipped
@@ -44,8 +43,9 @@ Tested as new install and overwriting existing pervious install on JM21 v1.1.0 a
 - ✅ Background Apps Control
 - ✅ Music Apps Whitelist
 - ✅ Wavelet Enhanced session detection support
+- ✅ Scrobbling support if Pano Scrobbler is installed 
 
-### New Functions
+### Functions
 - `package_exists()` - Checks if a package is installed
 - `disable_pkg()` - Disables packages only if they exist
 - `force_stop_pkg()` - Stops packages only if they exist
@@ -53,40 +53,38 @@ Tested as new install and overwriting existing pervious install on JM21 v1.1.0 a
 - `whitelist_pkg()` - Adds to whitelist only if package exists
 
 ## 🐛 Fixes
-
-- Fixed various typos
-- Moved wait for `sys.boot_completed` to service.sh
+- None in this revision
 
 ## 📊 Test Environment #1
 
 **Test Device**: FiiO JM21  
 **Android Verion**: TKQ1.230110.001 (Android 13)
-**Firmware**: 1.1.0  
-**Kernel**: 5.15.41-android13-8-gd319db77ec17-dirty
+**Firmware**: 1.1.1  
+**Kernel**: 5.15.41-android13-8-g9ded8564ff52-dirty
 
 ### Results Environment #1
 - ✅ **Execution**: #Complete without errors
 - ✅ **Error Log**: #Empty (no errors)
 - ✅ **Optimizations**: #All applied correctly
-- ✅ **Processed Packages**: #142 detected, 31 disabled
+- ✅ **Processed Packages**: #150 detected, 31 disabled
 
 ## 📊 Test Environment #2
 
 **Test Device**: FiiO M21  
 **Android Verion**: TKQ1.230110.001 (Android 13)
-**Firmware**: 1.0.7  
-**Kernel**: 5.15.41-android13-8-gd319db77ec17-dirty
+**Firmware**: 1.0.8 
+**Kernel**: 5.15.41-android13-8-g9ded8564ff52-dirty
 
 ### Results Environment #2
 - ✅ **Execution**: #Complete without errors
 - ✅ **Error Log**: #Empty (no errors)
 - ✅ **Optimizations**: #All applied correctly
-- ✅ **Processed Packages**: #146 detected, 31 disabled
+- ✅ **Processed Packages**: #148 detected, 31 disabled
 
 ## 📦 Installation
 
 ### Quick Method:
-1. Download `FiiOat_v17_r41.zip` from this release
+1. Download `FiiOat_v17_r44.zip` from this release
 2. Open Magisk Manager
 3. Go to Modules → Install from storage
 4. Select the downloaded ZIP
@@ -135,16 +133,10 @@ You should see "All optimizations completed" in `info.log` and no errors in `err
 
 ## 📝 Full Changelog
 
-### v17_r41 (2025-12-23)
-- Added support for Wavelet. (Please note that Wavelet AutoEQ and headphone
-  detection does not function as intended. Neither FiiO nor FiiO Android Tweaker
-  can resolve these specific issues with Wavelet app.) 
-
-### Compared to v17_r37:
-- Better compatibility with all firmware versions
-- Fewer errors when packages don't exist
-- More detailed and useful logging
-- More maintainable code
+### v17_r44 (2026-05-01)
+- Added support for FiiO iPod application.
+- support for firmware 1.1.1 (JM21)
+- Support for firmware 1.0.8
 
 ---
 
