@@ -33,6 +33,7 @@ REQUIRED_FILES=(
     "service.sh"
     "module.prop"
     "customize.sh"
+    "action.sh"
 )
 
 MISSING_FILES=()
@@ -65,6 +66,7 @@ if command -v zip &> /dev/null; then
         service.sh \
         module.prop \
         customize.sh \
+        action.sh \
         > /dev/null
     ZIP_RESULT=$?
 elif command -v 7z &> /dev/null; then
@@ -75,6 +77,7 @@ elif command -v 7z &> /dev/null; then
         service.sh \
         module.prop \
         customize.sh \
+        action.sh \
         > /dev/null
     ZIP_RESULT=$?
 elif command -v python3 &> /dev/null; then
@@ -91,7 +94,8 @@ files = [
     'FiiOat.sh',
     'service.sh',
     'module.prop',
-    'customize.sh'
+    'customize.sh',
+    'action.sh'
 ]
 
 with zipfile.ZipFile(zip_name, 'w', zipfile.ZIP_DEFLATED) as zipf:
