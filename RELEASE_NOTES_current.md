@@ -1,9 +1,9 @@
-# FiiOat v17_r46.01 - Release Notes
+# FiiOat v17_r47.01 - Release Notes
 
 ## 🎉 Stable Release - Tested and Working
 
 **Release Date**: 05-02-2026  
-**Version**: v17_r46  
+**Version**: v17_r47  
 # **Status**: ✅ **STABLE AND TESTED**
 
 ---
@@ -85,7 +85,7 @@ This version includes improvements for future firmware compatibility and better 
 ## 📦 Installation
 
 ### Quick Method:
-1. Download `FiiOat_v17_r46.zip` from this release
+1. Download `FiiOat_v17_r47.zip` from this release
 2. Open Magisk Manager
 3. Go to Modules → Install from storage
 4. Select the downloaded ZIP
@@ -134,7 +134,7 @@ You should see "All optimizations completed" in `info.log` and no errors in `err
 
 ## 📝 Full Changelog
 
-### v17_r46 (2026-05-01)
+### v17_r47 (2026-05-01)
 - Removed Super High Gain fullscreen notification
 - Added Super High Gain as a toast dialog
 

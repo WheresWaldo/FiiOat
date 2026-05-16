@@ -13,7 +13,7 @@ ERROR_LOG="${MODDIR}/error.log"
 :> "$INFO_LOG"
 :> "$ERROR_LOG"
 
-RELEASE="r46"
+RELEASE="r47"
 
 # Function to append a message to the specified log file
 log_message() {
@@ -487,9 +487,8 @@ if pm list packages | grep -q "$PACKAGE_NAME"; then
 		log_info "$PACKAGE_NAME not installed."
 fi
 
-# ×××××××××××××××××××××××××××××××××××× #
 # Button Remap Daemon (KEY_TV)
-# ×××××××××××××××××××××××××××××××××××× #
+# Used as button remapping function, if enabled
 BUTTON_CONF="${MODDIR}/button_remap.conf"
 if [ -f "$BUTTON_CONF" ]; then
     REMAP_PKG="$(cat "$BUTTON_CONF" | tr -d '[:space:]')"
