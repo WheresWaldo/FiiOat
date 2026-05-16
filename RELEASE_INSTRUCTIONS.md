@@ -1,4 +1,4 @@
-# Release Creation Instructions for v17_r45
+# Release Creation Instructions for v17_r46
 
 ## Option 1: Using GitHub CLI (Recommended)
 
@@ -32,14 +32,14 @@ The script automatically:
    https://github.com/WheresWaldo/FiiOat/releases/new
 
 2. **Fill the form**:
-   - **Tag**: `v17_r45` (must match exactly)
+   - **Tag**: `v17_r46` (must match exactly)
    - **Target**: `main`
-   - **Release title**: `FiiOat v17_r45 - Stable Release`
+   - **Release title**: `FiiOat v17_r46 - Stable Release`
    - **Description**: Copy the complete content from `RELEASE_NOTES_current.md`
 
 3. **Attach file**:
    - Click "Attach binaries"
-   - Select: `FiiOat_v17_r45.zip`
+   - Select: `FiiOat_v17_r46.zip`
 
 4. **Publish**:
    - Make sure it's NOT marked as "Pre-release"
@@ -64,20 +64,20 @@ cd /path/to/FiiOat
 
 After creating the release, verify:
 
-1. **Release URL**: https://github.com/WheresWaldo/FiiOat/releases/tag/v17_r45
+1. **Release URL**: https://github.com/WheresWaldo/FiiOat/releases/tag/v17_r46
 2. **ZIP file**: Must be available for download
 3. **Notes**: Must display correctly formatted
 
 ## Release Content
 
 - **Tag**: v17_r40
-- **Title**: FiiOat v17_r45 - Stable Release
-- **File**: FiiOat_v17_r45.zip
+- **Title**: FiiOat v17_r46 - Stable Release
+- **File**: FiiOat_v17_r46.zip
 - **Notes**: Content from RELEASE_NOTES_current.md
 
 ## Important Notes
 
-- The tag `v17_r45` already exists in the repository (was created earlier)
+- The tag `v17_r46` already exists in the repository (was created earlier)
 - If GitHub asks if you want to use the existing tag, select "Use existing tag"
 - Make sure the release is marked as "Latest release" if it's the most recent version
 

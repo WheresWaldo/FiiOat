@@ -13,7 +13,7 @@ ERROR_LOG="${MODDIR}/error.log"
 :> "$INFO_LOG"
 :> "$ERROR_LOG"
 
-RELEASE="r45"
+RELEASE="r46"
 
 # Function to append a message to the specified log file
 log_message() {
@@ -238,6 +238,10 @@ log_info "Android system reporting disabled"
 settings put global cell_on 0
 settings put global cdma_cell_broadcast_sms 0
 log_info "Cell activity disabled"
+log_info "Remove Super High Gain fullscreen notification"
+settings put system super_over_ear_dialog_show 0
+log_info "Add Super High Gain selection to notifications"
+resetprop -p persist.sys.super_over_ear_lock true
 log_info "All optimizations completed."
 
 # Log final total swap size
