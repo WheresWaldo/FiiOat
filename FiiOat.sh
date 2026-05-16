@@ -487,6 +487,50 @@ if pm list packages | grep -q "$PACKAGE_NAME"; then
 		log_info "$PACKAGE_NAME not installed."
 fi
 
+# ×××××××××××××××××××××××××××××××××××× #
+# Button Remap Daemon (KEY_TV)
+# ×××××××××××××××××××××××××××××××××××× #
+BUTTON_CONF="${MODDIR}/button_remap.conf"
+if [ -f "$BUTTON_CONF" ]; then
+    REMAP_PKG="$(cat "$BUTTON_CONF" | tr -d '[:space:]')"
+    if [ -n "$REMAP_PKG" ] && [ "$REMAP_PKG" != "disabled" ]; then
+        # Verify the package is still installed
+        if pm list packages 2>/dev/null | grep -q "^package:${REMAP_PKG}$"; then
+            log_info "Starting button remap daemon for: $REMAP_PKG"
+            (while true; do
+                # Wait for KEY_TV DOWN event
+                getevent -lqc 1 /dev/input/event1 2>/dev/null | grep -q 'KEY_TV.*DOWN' || continue
+                # Record timestamp of DOWN (milliseconds)
+                down_time=$(date +%s%3N 2>/dev/null || date +%s)
+                # Now wait for KEY_TV UP event
+                while true; do
+                    getevent -lqc 1 /dev/input/event1 2>/dev/null | grep -q 'KEY_TV.*UP' && break
+                done
+                up_time=$(date +%s%3N 2>/dev/null || date +%s)
+                # Calculate hold duration
+                hold_ms=$((up_time - down_time))
+                # Only launch app on short press (< 500ms)
+                if [ "$hold_ms" -lt 500 ]; then
+                    am start -n "$(cmd package resolve-activity --brief "$REMAP_PKG" 2>/dev/null | tail -1)" \
+                        --activity-brought-to-front 2>/dev/null || \
+                    am start "$(pm resolve-activity -a android.intent.action.MAIN -c android.intent.category.LAUNCHER "$REMAP_PKG" 2>/dev/null | grep 'name=' | head -1 | sed 's/.*name=//')" 2>/dev/null || \
+                    monkey -p "$REMAP_PKG" -c android.intent.category.LAUNCHER 1 2>/dev/null
+                    log_info "Button remap: launched $REMAP_PKG (hold=${hold_ms}ms)"
+                else
+                    log_info "Button remap: long press detected (hold=${hold_ms}ms), skipped"
+                fi
+            done) &
+            log_info "Button remap daemon started (PID: $!)"
+        else
+            log_error "Button remap: package $REMAP_PKG not found, skipping"
+        fi
+    else
+        log_info "Button remap: disabled by user"
+    fi
+else
+    log_info "Button remap: no configuration found"
+fi
+
 # And -- We're done!
 # Since we waited for boot_complete there is a delay
 # before this toast notification pops up on the device
