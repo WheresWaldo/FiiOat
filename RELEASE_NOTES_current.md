@@ -1,9 +1,9 @@
-# FiiOat v17_r48.01 - Release Notes
+# FiiOat v17_r49.01 - Release Notes
 
 ## 🎉 Stable Release - Tested and Working
 
 **Release Date**: 06-29-2026  
-**Version**: v17_r48  
+**Version**: v17_r49  
 # **Status**: ✅ **STABLE AND TESTED**
 
 ---
@@ -85,7 +85,7 @@ This version includes improvements for future firmware compatibility and better 
 ## 📦 Installation
 
 ### Quick Method:
-1. Download `FiiOat_v17_r48.zip` from this release
+1. Download `FiiOat_v17_r49.zip` from this release
 2. Open Magisk Manager
 3. Go to Modules → Install from storage
 4. Select the downloaded ZIP

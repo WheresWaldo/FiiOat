@@ -1,8 +1,8 @@
-# Installation and Testing Guide - FiiOat_v17_r48
+# Installation and Testing Guide - FiiOat_v17_r49
 
 ## ⚠️ IMPORTANT: Stable Version
 
-This version (v17_r48) has been **tested and is stable**. Ready for production use.
+This version (v17_r49) has been **tested and is stable**. Ready for production use.
 
 ## Prerequisites
 
@@ -17,14 +17,14 @@ This version (v17_r48) has been **tested and is stable**. Ready for production u
 ### Option A: Download from GitHub (Recommended)
 
 1. Go to: https://github.com/WheresWaldo/FiiOat/releases
-2. Download the latest release: `FiiOat_v17_r48.zip`
+2. Download the latest release: `FiiOat_v17_r49.zip`
 
 ### Option B: Clone the Repository (For Developers)
 
 ```bash
 git clone https://github.com/WheresWaldo/FiiOat.git
 cd FiiOat
-git checkout v17_r48
+git checkout v17_r49
 ```
 
 ## Step 2: Prepare the Module for Installation
@@ -50,12 +50,12 @@ If you downloaded the source code and need to create the ZIP manually:
 
    **With zip:**
    ```bash
-   zip -r FiiOat_v17_r48.zip META-INF/ FiiOat.sh service.sh module.prop customize.sh
+   zip -r FiiOat_v17_r49.zip META-INF/ FiiOat.sh service.sh module.prop customize.sh
    ```
 
    **With 7z:**
    ```bash
-   7z a -tzip FiiOat_v17_r48.zip META-INF/ FiiOat.sh service.sh module.prop customize.sh
+   7z a -tzip FiiOat_v17_r49.zip META-INF/ FiiOat.sh service.sh module.prop customize.sh
    ```
 
    **With Python3:**
@@ -63,11 +63,11 @@ If you downloaded the source code and need to create the ZIP manually:
    import zipfile
    import os
    
-   with zipfile.ZipFile('FiiOat_v17_r48.zip', 'w') as zipf:
+   with zipfile.ZipFile('FiiOat_v17_r49.zip', 'w') as zipf:
        for root, dirs, files in os.walk('META-INF'):
            for file in files:
                zipf.write(os.path.join(root, file))
-       for file in ['FiiOat.sh', 'service.sh', 'module.prop', 'customize.sh']:
+       for file in ['FiiOat.sh', 'service.sh', 'module.prop', 'customize.sh', 'action.sh']:
            if os.path.exists(file):
                zipf.write(file)
    ```
@@ -85,16 +85,17 @@ FiiOat.zip
 ├── FiiOat.sh
 ├── service.sh
 ├── module.prop
-└── customize.sh
+├── customize.sh
+└── action.sh
 ```
 
 ## Step 3: Transfer Module to Device
 
 1. Connect your FiiO JM21/M21 to the computer via USB
-2. Transfer the `FiiOat_v17_r48.zip` file to the device's internal storage
+2. Transfer the `FiiOat_v17_r49.zip` file to the device's internal storage
 3. Or transfer via ADB:
    ```bash
-   adb push FiiOat_v17_r48.zip /sdcard/Download/
+   adb push FiiOat_v17_r49.zip /sdcard/Download/
    ```
 
 ## Step 4: Install Module in Magisk
@@ -105,7 +106,7 @@ FiiOat.zip
 2. Go to the **"Modules"** tab
 3. Tap **"Install from storage"** button
 4. Navigate to where you saved the ZIP (usually `/sdcard/Download/`)
-5. Select `FiiOat_v17_r48.zip`
+5. Select `FiiOat_v17_r49.zip`
 6. Tap **"Install"**
 7. Wait for installation to complete
 8. **IMPORTANT**: Tap **"Reboot"** to apply changes
@@ -120,7 +121,7 @@ adb shell
 su
 
 # Install module
-magisk --install-module /sdcard/Download/FiiOat_v17_r48.zip
+magisk --install-module /sdcard/Download/FiiOat_v17_r49.zip
 
 # Reboot
 reboot
@@ -133,7 +134,7 @@ reboot
 1. Open the **Magisk** app
 2. Go to **"Modules"**
 3. Verify that **"FiiO Android Tweaker"** appears in the list and is enabled
-4. You should see version `v17_r48`
+4. You should see version `v17_r49`
 
 ### Check Logs:
 
@@ -274,7 +275,7 @@ Before reporting that it works, verify:
 ## Support
 
 - **GitHub Issues**: https://github.com/WheresWaldo/FiiOat/issues
-- **Version**: v17_r48 (Stable)
+- **Version**: v17_r49 (Stable)
 
 ---
 

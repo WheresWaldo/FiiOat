@@ -13,7 +13,7 @@ ERROR_LOG="${MODDIR}/error.log"
 :> "$INFO_LOG"
 :> "$ERROR_LOG"
 
-RELEASE="r47"
+RELEASE="r49"
 
 # Function to append a message to the specified log file
 log_message() {
@@ -79,7 +79,7 @@ INSTALLED_PACKAGES="$(pm list packages 2>/dev/null)"
 
 # Log starting information
 log_info "Starting FiiOat $RELEASE"
-log_info "Build Date: 05-01-2026"
+log_info "Build Date: 06-29-2026"
 log_info "Installed: $(date +'%m-%d-%Y')"
 log_info "Author: @WheresWaldo (Github/Head-Fi)"
 log_info "Device: $FIIO_MODEL"
